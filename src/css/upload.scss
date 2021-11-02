@@ -1,0 +1,52 @@
+@import "../variable";
+
+.InputForm {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	height: 100vh;
+	background-color: $secondary;
+	h1 {
+		color: $quaternary;
+		font-size: 2.5rem;
+		margin: 55px 0;
+	}
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		background: $secondary;
+		box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(25px);
+		border-radius: 10px;
+		border: 1px solid rgba(255, 255, 255, 0.18);
+		padding: 35px;
+		input {
+			margin-bottom: 10px;
+			width: 50%;
+			padding: 5px;
+			border: none;
+			outline: none;
+			border-radius: 5px;
+			padding: 15px;
+			background-color: $tertiary;
+		}
+		input:focus {
+			outline: none;
+			border: none;
+		}
+	}
+}
+.files {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.divFileUpload {
+}
+.fileUpload {
+	background-color: black;
+}
