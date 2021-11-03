@@ -36,7 +36,14 @@ function Songs() {
 			) : (
 				""
 			)}
-
+			<h1
+				style={{
+					color: "white",
+					marginTop: "80px",
+				}}
+			>
+				Listen To Songs
+			</h1>
 			<div className="songs">
 				{data
 					? data.map((item, index) => {
@@ -44,6 +51,7 @@ function Songs() {
 								<div className="container">
 									<div className="song" key={index}>
 										<div className="song-img">
+											{" "}
 											<img draggable="false" src={item.cover} alt="" />
 										</div>
 										<div>

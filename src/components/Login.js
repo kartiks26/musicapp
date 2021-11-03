@@ -23,13 +23,15 @@ function Login() {
 	const app = initializeApp(firebaseConfig);
 
 	const context = useContext(AuthContext);
-	const { user, setUser } = context;
+	const { user, setUser, login } = context;
 	const GoogleLogin = () => {
 		const provider = new GoogleAuthProvider();
 		const auth = getAuth();
 		signInWithPopup(auth, provider)
 			.then((res) => {
 				setUser(res.user);
+				login(res.user);
+
 				console.log(res.user);
 			})
 			.catch((err) => {
@@ -42,6 +44,7 @@ function Login() {
 		signInWithPopup(auth, provider)
 			.then((res) => {
 				setUser(res.user);
+				login(res.user);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -54,6 +57,7 @@ function Login() {
 		signInWithPopup(auth, provider)
 			.then((res) => {
 				setUser(res.user);
+				login(res.user);
 			})
 			.catch((err) => {
 				console.log(err);
