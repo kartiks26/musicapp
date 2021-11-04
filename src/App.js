@@ -4,7 +4,12 @@ import Upload from "./components/Upload";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
+import Favorites from "./components/Favorites";
+import AuthContext from "./context/AuthContext";
+import { useContext } from "react";
 function App() {
+	const context = useContext(AuthContext);
+	const { data, favoriteSongs } = context;
 	return (
 		<div className="App">
 			<Router>
@@ -13,9 +18,13 @@ function App() {
 						<Navbar />
 						<Upload />
 					</Route>
+					<Route exact path="/Favorites">
+						<Navbar />
+						<Favorites data={favoriteSongs} />
+					</Route>
 					<Route exact path="/">
 						<Navbar />
-						<Songs />
+						<Songs data={data} />
 					</Route>
 					<Route exact path="/login">
 						<Navbar />

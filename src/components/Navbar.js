@@ -33,6 +33,9 @@ function Navbar() {
 					<Link className="Link" to="/">
 						Home
 					</Link>
+					<Link className="Link" to="/Favorites">
+						Favorites
+					</Link>
 					<Link className="Link" to="/upload">
 						<img src="/images/upload.svg" />
 					</Link>
@@ -72,6 +75,9 @@ function Navbar() {
 					>
 						<Link className="Link" to="/">
 							Home
+						</Link>
+						<Link className="Link" to="/Favorites">
+							Favorites
 						</Link>
 						<Link className="Link" to="/upload">
 							<img src="/images/upload.svg" />
