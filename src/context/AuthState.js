@@ -10,13 +10,14 @@ const AuthState = (props) => {
 	const [currentSong, setCurrentSong] = useState(null);
 	const [data, setData] = useState([]);
 	const [favoriteSongs, setFavoriteSongs] = useState([]);
-
+	const [uploadedImage, setUploadedImage] = useState(null);
+	const [uploadedSong, setUploadedSong] = useState(null);
 	const login = (user) => {
 		setUser(user);
 		localStorage.setItem("MusicUser", JSON.stringify(user));
 		// store user in cookies
 	};
-	const url = "http://localhost:4000";
+	const url = "https://incandescent-act-production.up.railway.app";
 
 	useEffect(async () => {
 		try {
@@ -35,6 +36,7 @@ const AuthState = (props) => {
 		storageBucket: "users-e2358.appspot.com",
 		messagingSenderId: "322018798621",
 		appId: "1:322018798621:web:3306a362e605c6a29f2af4",
+		storageBucket: "gs://users-e2358.appspot.com",
 	});
 	const db = getFirestore();
 
@@ -99,6 +101,10 @@ const AuthState = (props) => {
 				favoriteSongs,
 				setFavoriteSongs,
 				addFavorite,
+				uploadedImage,
+				setUploadedImage,
+				uploadedSong,
+				setUploadedSong,
 			}}
 		>
 			{props.children}

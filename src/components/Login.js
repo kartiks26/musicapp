@@ -18,6 +18,7 @@ function Login() {
 		storageBucket: "users-e2358.appspot.com",
 		messagingSenderId: "322018798621",
 		appId: "1:322018798621:web:3306a362e605c6a29f2af4",
+		storageBucket: "gs://users-e2358.appspot.com",
 	};
 
 	const app = initializeApp(firebaseConfig);
