@@ -12,6 +12,7 @@ import {
 	uploadBytesResumable,
 	getDownloadURL,
 } from "firebase/storage";
+import { useHistory } from "react-router";
 function Upload() {
 	const [length, setLength] = useState(window.innerWidth);
 	useEffect(() => {
@@ -22,10 +23,19 @@ function Upload() {
 
 	const [UploadImage, setUploadImage] = useState(null);
 	const [UploadSong, setUploadSong] = useState(null);
+	const [imageProgress, setImageProgress] = useState(0);
+	const [songProgress, setSongProgress] = useState(0);
+	const history = useHistory();
 
 	const context = useContext(AuthContext);
-	const { uploadedImage, setUploadedImage, uploadedSong, setUploadedSong } =
-		context;
+	const {
+		uploadedImage,
+		setUploadedImage,
+		uploadedSong,
+		setUploadedSong,
+		Alert,
+		setAlert,
+	} = context;
 
 	const [newUser, setNewUser] = useState({
 		title: "",
@@ -47,9 +57,22 @@ function Upload() {
 				data
 			)
 			.then((res) => {
-				console.log(res);
+				setAlert(["Song Is Uploaded", ...Alert]);
+				setImageProgress(0);
+				setSongProgress(0);
+				setUploadedImage(null);
+				setUploadedSong(null);
+				setUploadSong(null);
+				setUploadImage(null);
+				setNewUser({
+					title: "",
+					artist: "",
+				});
+				setUploadedImage("");
+				setUploadedSong("");
 			})
 			.catch((err) => {
+				setAlert(["Upload Failed", ...Alert]);
 				console.log(err);
 			});
 	};
@@ -79,13 +102,16 @@ function Upload() {
 				// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
 				const progress =
 					(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+				setImageProgress(progress);
 				console.log("Upload is " + progress + "% done");
 				switch (snapshot.state) {
 					case "paused":
 						console.log("Upload is paused");
+						setAlert(["Upload is paused", ...Alert]);
 						break;
 					case "running":
 						console.log("Upload is running");
+						setAlert(["Upload is running", ...Alert]);
 						break;
 				}
 			},
@@ -95,15 +121,20 @@ function Upload() {
 				switch (error.code) {
 					case "storage/unauthorized":
 						// User doesn't have permission to access the object
+						setAlert(["Permission Denied", ...Alert]);
 						break;
 					case "storage/canceled":
 						// User canceled the upload
+						setAlert(["Canceled Upload", ...Alert]);
+
 						break;
 
 					// ...
 
 					case "storage/unknown":
 						// Unknown error occurred, inspect error.serverResponse
+						setAlert(["Unknown Error Occurred", ...Alert]);
+
 						break;
 				}
 			},
@@ -111,6 +142,7 @@ function Upload() {
 				// Upload completed successfully, now we can get the download URL
 				getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
 					console.log("File available at", downloadURL);
+					setAlert(["Upload is Completed", ...Alert]);
 					setUploadedImage(downloadURL);
 				});
 			}
@@ -139,13 +171,16 @@ function Upload() {
 				// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
 				const progress =
 					(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+				setSongProgress(progress);
 				console.log("Upload is " + progress + "% done");
 				switch (snapshot.state) {
 					case "paused":
 						console.log("Upload is paused");
+						setAlert(["Upload is paused", ...Alert]);
 						break;
 					case "running":
 						console.log("Upload is running");
+						setAlert(["Upload is running", ...Alert]);
 						break;
 				}
 			},
@@ -171,6 +206,7 @@ function Upload() {
 				// Upload completed successfully, now we can get the download URL
 				getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
 					console.log("File available at", downloadURL);
+					setAlert(["Upload is Done", ...Alert]);
 					setUploadedSong(downloadURL);
 				});
 			}
@@ -205,6 +241,10 @@ function Upload() {
 								id="image"
 								className="fileUpload"
 							></input>
+
+							<progress id="file" value={imageProgress} max="100">
+								{imageProgress}%
+							</progress>
 						</div>
 
 						<div className="divFileUpload">
@@ -230,6 +270,9 @@ function Upload() {
 								required
 								onChange={handelSong}
 							/>
+							<progress id="file" value={songProgress} max="100">
+								{songProgress}%
+							</progress>
 						</div>
 					</div>
 					<div className="OtherInputs">
@@ -238,7 +281,7 @@ function Upload() {
 							placeholder="Title"
 							name="title"
 							required
-							value={newUser.tile}
+							value={newUser.title}
 							onChange={handleChange}
 						/>
 						<input

@@ -76,16 +76,20 @@
 					justify-content: center;
 					align-items: center;
 					flex-direction: column;
+					progress {
+						align-self: flex-start;
+						height: 15px;
+						margin-top: 20px;
+						width: 70%;
+					}
 					label {
 						img {
 							width: 80%;
 							max-width: 400px;
-
 							height: auto;
 						}
 
 						p {
-							align-self: center;
 							font-size: 1.2rem;
 							font-weight: bold;
 							color: $primary;

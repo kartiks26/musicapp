@@ -12,6 +12,9 @@ const AuthState = (props) => {
 	const [favoriteSongs, setFavoriteSongs] = useState([]);
 	const [uploadedImage, setUploadedImage] = useState(null);
 	const [uploadedSong, setUploadedSong] = useState(null);
+	const [ShuffleSongs, setShuffleSongs] = useState([]);
+	const ShufflingSongs = [];
+	const [Alert, setAlert] = useState([]);
 	const login = (user) => {
 		setUser(user);
 		localStorage.setItem("MusicUser", JSON.stringify(user));
@@ -26,6 +29,7 @@ const AuthState = (props) => {
 
 			setData(json.songs);
 		} catch (error) {
+			setAlert(["Error Occurred", ...Alert]);
 			console.log(error);
 		}
 	}, []);
@@ -68,10 +72,13 @@ const AuthState = (props) => {
 					setFavoriteSongs([...favoriteSongs, song]);
 				} else {
 					console.log("Song already in favorites");
+					setAlert(["Song already in favorites", ...Alert]);
 				}
 			} catch (e) {
 				console.error("Error adding document: ", e);
 			}
+		} else {
+			setAlert(["Please Login to add to favorites", ...Alert]);
 		}
 	};
 
@@ -84,10 +91,17 @@ const AuthState = (props) => {
 			querySnapshot.then((snapshot) => {
 				const songs = snapshot.docs.map((doc) => doc.data().song);
 				setFavoriteSongs(songs);
+				setAlert(["Songs Loading", ...Alert]);
 			});
 		}
 	}, [user]);
 
+	useEffect(() => {
+		data.map((song) => {
+			ShufflingSongs.push(song.SongUrl);
+		});
+		setShuffleSongs(ShufflingSongs);
+	}, [data]);
 	return (
 		<AuthContext.Provider
 			value={{
@@ -105,6 +119,10 @@ const AuthState = (props) => {
 				setUploadedImage,
 				uploadedSong,
 				setUploadedSong,
+				Alert,
+				setAlert,
+				ShuffleSongs,
+				setShuffleSongs,
 			}}
 		>
 			{props.children}

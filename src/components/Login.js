@@ -9,7 +9,7 @@ import {
 	TwitterAuthProvider,
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-
+import { useHistory } from "react-router";
 function Login() {
 	const firebaseConfig = {
 		apiKey: "AIzaSyDLj-taD0dvM6ETYt4PyNsZBWH-mZwgSdI",
@@ -20,11 +20,12 @@ function Login() {
 		appId: "1:322018798621:web:3306a362e605c6a29f2af4",
 		storageBucket: "gs://users-e2358.appspot.com",
 	};
-
 	const app = initializeApp(firebaseConfig);
 
 	const context = useContext(AuthContext);
-	const { user, setUser, login } = context;
+
+	const { user, setUser, login, Alert, setAlert } = context;
+	const history = useHistory();
 	const GoogleLogin = () => {
 		const provider = new GoogleAuthProvider();
 		const auth = getAuth();
@@ -32,11 +33,14 @@ function Login() {
 			.then((res) => {
 				setUser(res.user);
 				login(res.user);
+				setAlert(["Login Successfully", ...Alert]);
 
+				history.push("/");
 				console.log(res.user);
 			})
 			.catch((err) => {
 				console.log(err);
+				setAlert(["Login Failed", ...Alert]);
 			});
 	};
 	const FacebookLogin = () => {
@@ -46,9 +50,13 @@ function Login() {
 			.then((res) => {
 				setUser(res.user);
 				login(res.user);
+				setAlert(["Login Successfully", ...Alert]);
+
+				history.push("/");
 			})
 			.catch((err) => {
 				console.log(err);
+				setAlert(["Login Failed", ...Alert]);
 			});
 	};
 	const TwitterLogin = () => {
@@ -59,8 +67,13 @@ function Login() {
 			.then((res) => {
 				setUser(res.user);
 				login(res.user);
+				setAlert(["Login Successfully", ...Alert]);
+
+				history.push("/");
 			})
 			.catch((err) => {
+				setAlert(["Login Failed", ...Alert]);
+
 				console.log(err);
 			});
 	};

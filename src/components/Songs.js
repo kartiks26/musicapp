@@ -15,9 +15,46 @@ function Songs(props) {
 		favoriteSongs,
 		setFavoriteSongs,
 		addFavorite,
+		ShuffleSongs,
+		setShuffleSongs,
+		Alert,
+		setAlert,
 	} = context;
 	const data = props.data;
+	const audio = document.querySelectorAll("audio");
+
+	const [playingSong, setPlayingSong] = useState("");
 	const favIdArray = favoriteSongs.map((song) => song._id);
+	let index = 0;
+	const [lastPlayed, setLastPlayed] = useState(null);
+	const handelShufflePlay = () => {
+		try {
+			if (lastPlayed === null) {
+				let random = Math.floor(Math.random() * data.length);
+				setCurrentSong(data[random]);
+				audio[random].play();
+				setLastPlayed(random);
+			} else {
+				if (!audio[lastPlayed].paused) {
+					audio[lastPlayed].pause();
+					audio[lastPlayed].currentTime = 0;
+				}
+
+				let random = Math.floor(Math.random() * data.length);
+				while (random === lastPlayed) {
+					random = Math.floor(Math.random() * data.length);
+				}
+
+				setCurrentSong(data[random]);
+				audio[random].play();
+				setLastPlayed(random);
+			}
+		} catch (error) {
+			console.log(error);
+			setAlert(["Error Occurred", ...Alert]);
+		}
+	};
+
 	return (
 		<div className="main">
 			{currentSong ? (
@@ -26,20 +63,24 @@ function Songs(props) {
 					<div>
 						<h1>{currentSong ? currentSong.title : ""}</h1>
 						<h2>{currentSong ? currentSong.artist : ""}</h2>
+						{/* audio progress */}
 					</div>
 					<i class="fa-solid fa-xmark"></i>
 				</div>
 			) : (
 				""
 			)}
-			<h1
-				style={{
-					color: "white",
-					marginTop: "80px",
-				}}
-			>
-				Listen To Songs
-			</h1>
+			<div className="songControls">
+				<h1
+					style={{
+						color: "white",
+					}}
+				>
+					Listen To Songs
+				</h1>
+				<button onClick={handelShufflePlay}>shuffle</button>
+			</div>
+
 			<div className="songs">
 				{data
 					? data.map((item, index) => {
@@ -53,30 +94,36 @@ function Songs(props) {
 											<h1>{item.title}</h1>
 											<h3>{item.artist}</h3>
 										</div>
-										<button
-											onClick={() => {
-												addFavorite(item);
-											}}
-										>
-											<img
-												src={`images/${
-													favIdArray.includes(item._id) ? "Liked" : "NotLiked"
-												}.svg`}
-											/>
-										</button>
-										<audio
-											onPlay={() => {
-												setCurrentSong(item);
-											}}
-											onPause={() => {
-												if (!currentSong) {
-													setCurrentSong(null);
-												}
-											}}
-											src={item.SongUrl}
-											controls
-											controlsList="nodownload noplaybackrate"
-										></audio>
+
+										<div className="audioLike">
+											<audio
+												onPlay={() => {
+													setCurrentSong(item);
+												}}
+												onPause={() => {
+													if (!currentSong) {
+														setCurrentSong(null);
+													}
+												}}
+												onEnded={() => {
+													handelShufflePlay();
+												}}
+												src={item.SongUrl}
+												controls
+												controlsList="nodownload noplaybackrate"
+											></audio>
+											<button
+												onClick={() => {
+													addFavorite(item);
+												}}
+											>
+												<img
+													src={`images/${
+														favIdArray.includes(item._id) ? "Liked" : "NotLiked"
+													}.svg`}
+												/>
+											</button>
+										</div>
 									</div>
 								</div>
 							);
