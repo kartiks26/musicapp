@@ -23,6 +23,7 @@ function Songs(props) {
 	const [controls, setControls] = useState(false);
 	const favIdArray = favoriteSongs.map((song) => song._id);
 	const [lastPlayed, setLastPlayed] = useState(null);
+	const [PlayPause, setPlayPause] = useState(false);
 	function muteAudio() {
 		var audios = document.getElementsByTagName("audio"),
 			i,
@@ -43,24 +44,21 @@ function Songs(props) {
 		}
 	}
 	const handelShufflePlay = () => {
+		setPlayPause(false);
 		try {
 			var audio = document.querySelectorAll("audio");
-
+			let random = Math.floor(Math.random() * data.length);
 			if (lastPlayed === null) {
-				let random = Math.floor(Math.random() * data.length);
 				setCurrentSong(data[random]);
 				setLastPlayed(random);
 				audio[random].play();
 			} else {
-				console.log("last played", lastPlayed);
 				if (!audio[lastPlayed].paused) {
-					console.log("audio stopped", lastPlayed);
 					audio[lastPlayed].pause();
 					audio[lastPlayed].currentTime = 0;
 				}
 
 				let random = Math.floor(Math.random() * data.length);
-				// if (data.length > 1) {
 				while (random === lastPlayed) {
 					random = Math.floor(Math.random() * data.length);
 				}
@@ -82,10 +80,6 @@ function Songs(props) {
 					<div>
 						<h1>{currentSong ? currentSong.title : ""}</h1>
 						<h2>{currentSong ? currentSong.artist : ""}</h2>
-						<audio
-							id="CurrentSongPlaying"
-							src={currentSong ? currentSong.SongUrl : ""}
-						/>
 					</div>
 				</div>
 			) : (
@@ -121,6 +115,62 @@ function Songs(props) {
 						fill="white"
 					>
 						<path d="M12 2h-.6a2 2 0 0 0-1.444.617L6.239 6.5H2v5h4.239l3.717 3.883A2 2 0 0 0 11.4 16H12V2zM5.385 4.5L8.51 1.234A4 4 0 0 1 11.401 0H13a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-1.6a4 4 0 0 1-2.889-1.234L5.385 13.5H2a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h3.385zM19.415 9l1.413 1.414a1 1 0 1 1-1.414 1.414L18 10.414l-1.414 1.414a1 1 0 1 1-1.414-1.414L16.586 9l-1.414-1.414a1 1 0 0 1 1.414-1.414L18 7.586l1.414-1.414a1 1 0 1 1 1.414 1.414L19.414 9z"></path>
+					</svg>
+
+					{PlayPause ? (
+						<svg
+							onClick={() => {
+								if (lastPlayed || lastPlayed === 0) {
+									if (audio[lastPlayed].paused || lastPlayed === 0) {
+										audio[lastPlayed].play();
+										setPlayPause(!PlayPause);
+									}
+								}
+							}}
+							className="ActualControllers"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="-4 -3 24 24"
+							width="24"
+							fill="white"
+						>
+							<path d="M13.82 9.523a.976.976 0 0 0-.324-1.363L3.574 2.128a1.031 1.031 0 0 0-.535-.149c-.56 0-1.013.443-1.013.99V15.03c0 .185.053.366.153.523.296.464.92.606 1.395.317l9.922-6.031c.131-.08.243-.189.325-.317zm.746 1.997l-9.921 6.031c-1.425.867-3.3.44-4.186-.951A2.918 2.918 0 0 1 0 15.03V2.97C0 1.329 1.36 0 3.04 0c.567 0 1.123.155 1.605.448l9.921 6.032c1.425.866 1.862 2.696.975 4.088-.246.386-.58.712-.975.952z"></path>
+						</svg>
+					) : (
+						<svg
+							onClick={() => {
+								if (lastPlayed || lastPlayed === 0) {
+									if (!audio[lastPlayed].paused) {
+										audio[lastPlayed].pause();
+										setPlayPause(!PlayPause);
+									}
+								}
+							}}
+							className="ActualControllers"
+							xmlns="http://www.w3.org/2000/svg"
+							viewBox="-4 -3 24 24"
+							width="24"
+							fill="white"
+						>
+							<path d="M2 0h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 2v14h2V2H2zm10-2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 2v14h2V2h-2z"></path>
+						</svg>
+					)}
+					<svg
+						onClick={() => {
+							if (lastPlayed) {
+								if (!audio[lastPlayed].paused) {
+									audio[lastPlayed].pause();
+									audio[lastPlayed].currentTime = 0;
+								}
+							}
+
+							setCurrentSong(null);
+						}}
+						className="ActualControllers"
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						fill="white"
+					>
+						<path d="M4.16 4.16l1.42 1.42A6.99 6.99 0 0 0 10 18a7 7 0 0 0 4.42-12.42l1.42-1.42a9 9 0 1 1-11.69 0zM9 0h2v8H9V0z" />
 					</svg>
 				</div>
 			</div>
@@ -164,39 +214,43 @@ function Songs(props) {
 							>
 								<path d="M12 2h-.6a2 2 0 0 0-1.444.617L6.239 6.5H2v5h4.239l3.717 3.883A2 2 0 0 0 11.4 16H12V2zM5.385 4.5L8.51 1.234A4 4 0 0 1 11.401 0H13a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-1.6a4 4 0 0 1-2.889-1.234L5.385 13.5H2a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h3.385zM19.415 9l1.413 1.414a1 1 0 1 1-1.414 1.414L18 10.414l-1.414 1.414a1 1 0 1 1-1.414-1.414L16.586 9l-1.414-1.414a1 1 0 0 1 1.414-1.414L18 7.586l1.414-1.414a1 1 0 1 1 1.414 1.414L19.414 9z"></path>
 							</svg>
-							<svg
-								onClick={() => {
-									if (lastPlayed) {
-										if (audio[lastPlayed].paused) {
-											audio[lastPlayed].play();
+							{PlayPause ? (
+								<svg
+									onClick={() => {
+										if (lastPlayed) {
+											if (audio[lastPlayed].paused) {
+												audio[lastPlayed].play();
+												setPlayPause(!PlayPause);
+											}
 										}
-									}
-								}}
-								className="ActualControllers"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="-4 -3 24 24"
-								width="24"
-								fill="white"
-							>
-								<path d="M13.82 9.523a.976.976 0 0 0-.324-1.363L3.574 2.128a1.031 1.031 0 0 0-.535-.149c-.56 0-1.013.443-1.013.99V15.03c0 .185.053.366.153.523.296.464.92.606 1.395.317l9.922-6.031c.131-.08.243-.189.325-.317zm.746 1.997l-9.921 6.031c-1.425.867-3.3.44-4.186-.951A2.918 2.918 0 0 1 0 15.03V2.97C0 1.329 1.36 0 3.04 0c.567 0 1.123.155 1.605.448l9.921 6.032c1.425.866 1.862 2.696.975 4.088-.246.386-.58.712-.975.952z"></path>
-							</svg>
-
-							<svg
-								onClick={() => {
-									if (lastPlayed) {
-										if (!audio[lastPlayed].paused) {
-											audio[lastPlayed].pause();
+									}}
+									className="ActualControllers"
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="-4 -3 24 24"
+									width="24"
+									fill="white"
+								>
+									<path d="M13.82 9.523a.976.976 0 0 0-.324-1.363L3.574 2.128a1.031 1.031 0 0 0-.535-.149c-.56 0-1.013.443-1.013.99V15.03c0 .185.053.366.153.523.296.464.92.606 1.395.317l9.922-6.031c.131-.08.243-.189.325-.317zm.746 1.997l-9.921 6.031c-1.425.867-3.3.44-4.186-.951A2.918 2.918 0 0 1 0 15.03V2.97C0 1.329 1.36 0 3.04 0c.567 0 1.123.155 1.605.448l9.921 6.032c1.425.866 1.862 2.696.975 4.088-.246.386-.58.712-.975.952z"></path>
+								</svg>
+							) : (
+								<svg
+									onClick={() => {
+										if (lastPlayed) {
+											if (!audio[lastPlayed].paused) {
+												audio[lastPlayed].pause();
+												setPlayPause(!PlayPause);
+											}
 										}
-									}
-								}}
-								className="ActualControllers"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="-4 -3 24 24"
-								width="24"
-								fill="white"
-							>
-								<path d="M2 0h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 2v14h2V2H2zm10-2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 2v14h2V2h-2z"></path>
-							</svg>
+									}}
+									className="ActualControllers"
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="-4 -3 24 24"
+									width="24"
+									fill="white"
+								>
+									<path d="M2 0h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 2v14h2V2H2zm10-2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 2v14h2V2h-2z"></path>
+								</svg>
+							)}
 							<svg
 								onClick={() => {
 									if (lastPlayed) {
@@ -259,6 +313,7 @@ function Songs(props) {
 											<audio
 												onPlay={() => {
 													setCurrentSong(item);
+													setLastPlayed(index);
 												}}
 												onPause={() => {
 													if (!currentSong) {

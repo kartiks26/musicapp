@@ -1,0 +1,10 @@
+data ---- API
+
+campusStageLearning --- Json 
+
+student , joinedOutrage
+
+student = [{
+
+}]
+
