@@ -245,7 +245,7 @@ function Songs(props) {
 				{data
 					? data.map((item, index) => {
 							return (
-								<div className="container">
+								<div key={index} className="container">
 									<div className="song" key={index}>
 										<div className="song-img">
 											<img draggable="false" src={item.cover} alt="" />
