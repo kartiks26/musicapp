@@ -15,16 +15,15 @@ function Login() {
 		apiKey: "AIzaSyDLj-taD0dvM6ETYt4PyNsZBWH-mZwgSdI",
 		authDomain: "users-e2358.firebaseapp.com",
 		projectId: "users-e2358",
-		storageBucket: "users-e2358.appspot.com",
 		messagingSenderId: "322018798621",
 		appId: "1:322018798621:web:3306a362e605c6a29f2af4",
 		storageBucket: "gs://users-e2358.appspot.com",
 	};
-	const app = initializeApp(firebaseConfig);
+	initializeApp(firebaseConfig);
 
 	const context = useContext(AuthContext);
 
-	const { user, setUser, login, Alert, setAlert } = context;
+	const { setUser, login, Alert, setAlert } = context;
 	const history = useHistory();
 	const GoogleLogin = () => {
 		const provider = new GoogleAuthProvider();
@@ -80,18 +79,21 @@ function Login() {
 	return (
 		<div className="Authentication">
 			<img
+				alt="Google"
 				onClick={() => {
 					GoogleLogin();
 				}}
 				src="/images/Google.svg"
 			/>
 			<img
+				alt="Facebook"
 				onClick={() => {
 					FacebookLogin();
 				}}
 				src="/images/Facebook.svg"
 			/>
 			<img
+				alt="Twitter"
 				onClick={() => {
 					TwitterLogin();
 				}}

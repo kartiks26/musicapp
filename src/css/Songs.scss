@@ -8,6 +8,7 @@
 }
 
 .songs {
+	user-select: none;
 	background-color: $secondary;
 	display: flex;
 
@@ -18,16 +19,24 @@
 	margin-top: 30px;
 	margin-bottom: 80px;
 }
-.songControls {
+.songHeaders {
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 	align-items: center;
-	width: 100%;
+	width: 90%;
 	margin-top: 80px;
-	button {
-		background-color: transparent;
-		border: none;
-		outline: none;
+	p {
+		font-size: 1.5rem;
+		letter-spacing: 2px;
+
+		color: $primary;
+		font-family: $fontBase;
+	}
+	.headerControllers {
+		align-self: flex-end;
+		svg {
+			margin: 0px 20px;
+		}
 	}
 }
 .song {
@@ -43,6 +52,7 @@
 		width: 100%;
 		max-height: 90px;
 		img {
+			user-select: none;
 			width: 100%;
 			min-width: 180px;
 			max-height: 90px;
@@ -152,7 +162,7 @@ video::-webkit-media-controls-time-remaining-display {
 }
 
 .controls {
-	position: absolute;
+	position: fixed;
 	bottom: 50px;
 	right: 30px;
 	.controlButton {
@@ -183,5 +193,9 @@ video::-webkit-media-controls-time-remaining-display {
 	transform: scale(0.8);
 }
 .ActualControllers:hover {
+	fill: $quaternary;
+}
+
+.fill {
 	fill: $quaternary;
 }

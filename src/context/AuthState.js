@@ -12,8 +12,7 @@ const AuthState = (props) => {
 	const [favoriteSongs, setFavoriteSongs] = useState([]);
 	const [uploadedImage, setUploadedImage] = useState(null);
 	const [uploadedSong, setUploadedSong] = useState(null);
-	const [ShuffleSongs, setShuffleSongs] = useState([]);
-	const ShufflingSongs = [];
+	// const [ShuffleSongs, setShuffleSongs] = useState([]);
 	const [Alert, setAlert] = useState([]);
 	const login = (user) => {
 		setUser(user);
@@ -21,7 +20,7 @@ const AuthState = (props) => {
 		// store user in cookies
 	};
 	const url = "https://incandescent-act-production.up.railway.app";
-
+	// eslint-disable-next-line
 	useEffect(async () => {
 		try {
 			const response = await fetch(`${url}/upload/getAllSongs/`);
@@ -32,12 +31,13 @@ const AuthState = (props) => {
 			setAlert(["Error Occurred", ...Alert]);
 			console.log(error);
 		}
+		// eslint-disable-next-line
 	}, []);
+	// eslint-disable-next-line
 	const firebaseApp = initializeApp({
 		apiKey: "AIzaSyDLj-taD0dvM6ETYt4PyNsZBWH-mZwgSdI",
 		authDomain: "users-e2358.firebaseapp.com",
 		projectId: "users-e2358",
-		storageBucket: "users-e2358.appspot.com",
 		messagingSenderId: "322018798621",
 		appId: "1:322018798621:web:3306a362e605c6a29f2af4",
 		storageBucket: "gs://users-e2358.appspot.com",
@@ -64,11 +64,12 @@ const AuthState = (props) => {
 					where("song", "==", song)
 				);
 				const querySnapshot = await getDocs(q);
-				if (querySnapshot.docs.length == 0) {
+				if (querySnapshot.docs.length === 0) {
 					const docRef = await addDoc(FavSongs, {
 						song,
 						user: user.uid,
 					});
+					console.log(docRef);
 					setFavoriteSongs([...favoriteSongs, song]);
 				} else {
 					console.log("Song already in favorites");
@@ -94,14 +95,15 @@ const AuthState = (props) => {
 				setAlert(["Songs Loading", ...Alert]);
 			});
 		}
+		// eslint-disable-next-line
 	}, [user]);
 
-	useEffect(() => {
-		data.map((song) => {
-			ShufflingSongs.push(song.SongUrl);
-		});
-		setShuffleSongs(ShufflingSongs);
-	}, [data]);
+	// useEffect(() => {
+	// 	data.map((song) => {
+	// 		ShufflingSongs.push(song.SongUrl);
+	// 	});
+	// 	setShuffleSongs(ShufflingSongs);
+	// }, [data]);
 	return (
 		<AuthContext.Provider
 			value={{
@@ -121,8 +123,8 @@ const AuthState = (props) => {
 				setUploadedSong,
 				Alert,
 				setAlert,
-				ShuffleSongs,
-				setShuffleSongs,
+				// ShuffleSongs,
+				// setShuffleSongs,
 			}}
 		>
 			{props.children}

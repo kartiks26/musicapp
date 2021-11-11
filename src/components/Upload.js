@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import "../css/upload.scss";
-import { uploadImages, uploadSongs } from "../db/firebase";
 import AuthContext from "../context/AuthContext";
-import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import {
@@ -12,7 +10,6 @@ import {
 	uploadBytesResumable,
 	getDownloadURL,
 } from "firebase/storage";
-import { useHistory } from "react-router";
 function Upload() {
 	const [length, setLength] = useState(window.innerWidth);
 	useEffect(() => {
@@ -25,7 +22,6 @@ function Upload() {
 	const [UploadSong, setUploadSong] = useState(null);
 	const [imageProgress, setImageProgress] = useState(0);
 	const [songProgress, setSongProgress] = useState(0);
-	const history = useHistory();
 
 	const context = useContext(AuthContext);
 	const {
@@ -104,6 +100,7 @@ function Upload() {
 					(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 				setImageProgress(progress);
 				console.log("Upload is " + progress + "% done");
+				// eslint-disable-next-line
 				switch (snapshot.state) {
 					case "paused":
 						console.log("Upload is paused");
@@ -118,6 +115,7 @@ function Upload() {
 			(error) => {
 				// A full list of error codes is available at
 				// https://firebase.google.com/docs/storage/web/handle-errors
+				// eslint-disable-next-line
 				switch (error.code) {
 					case "storage/unauthorized":
 						// User doesn't have permission to access the object
@@ -173,6 +171,7 @@ function Upload() {
 					(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 				setSongProgress(progress);
 				console.log("Upload is " + progress + "% done");
+				// eslint-disable-next-line
 				switch (snapshot.state) {
 					case "paused":
 						console.log("Upload is paused");
@@ -187,6 +186,7 @@ function Upload() {
 			(error) => {
 				// A full list of error codes is available at
 				// https://firebase.google.com/docs/storage/web/handle-errors
+				// eslint-disable-next-line
 				switch (error.code) {
 					case "storage/unauthorized":
 						// User doesn't have permission to access the object
@@ -216,7 +216,7 @@ function Upload() {
 	return (
 		<div className="InputForm">
 			<div id={length < 426 ? "makeWidthBigger" : ""} className="banner">
-				<img src="images/UploadBanner.svg" />
+				<img alt="Upload Banner" src="images/UploadBanner.svg" />
 			</div>
 			<div className="UploadForm">
 				<form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -224,6 +224,7 @@ function Upload() {
 						<div className="divFileUpload">
 							<label htmlFor="image">
 								<img
+									alt="UploadImage"
 									src={`${
 										UploadImage ? UploadImage : "/images/UploadImage.svg"
 									}`}
@@ -253,7 +254,7 @@ function Upload() {
 									<p>{UploadSong.name}</p>
 								) : (
 									<>
-										<img src="/images/UploadSong.svg" />
+										<img alt="Upload song" src="/images/UploadSong.svg" />
 									</>
 								)}
 								{UploadSong ? (

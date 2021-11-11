@@ -22,9 +22,28 @@
 	ul {
 		display: flex;
 		align-items: center;
+		.notifier {
+			margin: 0px 10px;
+			margin-top: 14px;
+
+			p {
+				font-size: 0.6rem;
+				font-weight: bold;
+				z-index: 1;
+				color: $tertiary;
+				position: relative;
+				top: -25px;
+				left: 8px;
+				user-select: none;
+			}
+		}
+		.UserNotLoggedIn {
+			width: 26px;
+			height: 25px;
+		}
 		.Link {
 			list-style: none;
-			padding: 0 15px;
+			padding: 0 10px;
 			text-decoration: none;
 			font-size: 1.1rem;
 			font-family: $fontBase;
@@ -39,7 +58,7 @@
 			width: 35px;
 			height: 35px;
 			border-radius: 50%;
-			margin: 0 10px;
+			user-select: none;
 		}
 	}
 }
@@ -91,5 +110,39 @@
 		background-color: transparent;
 		border: none;
 		color: $primary;
+	}
+}
+
+.notification {
+	position: fixed;
+	top: 60px;
+	right: 30px;
+	max-width: 250px;
+	min-width: 250px;
+	min-height: 150px;
+	max-height: 150px;
+	background-color: azure;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	overflow: auto;
+	padding: 3px 3px;
+
+	.alerts {
+		z-index: 1;
+		line-height: 16px;
+		font-family: $fontBase;
+
+		background-color: #000000;
+		min-width: 100%;
+
+		padding: 7px 4px;
+		margin: 5px 0px;
+		h3 {
+			letter-spacing: 2.5px;
+			font-size: 0.8rem;
+			font-weight: 100;
+			color: $primary;
+		}
 	}
 }
