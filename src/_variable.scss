@@ -2,7 +2,6 @@
 // $secondary: #335c81;
 // $tertiary: #93b7be;
 // $quaternary: #000000;
-
 $primary: #ffffff;
 $secondary: #000000;
 $tertiary: #6c63ff;
@@ -15,3 +14,7 @@ $quaternary: #4088db;
 $paragraphFont: "Montserrat", sans-serif;
 $headingFont: "Noto Sans", sans-serif;
 $fontBase: "Libre Franklin", sans-serif;
+
+:root {
+	--bgColor: $primary;
+}
