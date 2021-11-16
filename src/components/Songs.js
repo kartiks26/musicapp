@@ -1,8 +1,6 @@
 import React, { useState, useContext } from "react";
 import AuthContext from "../context/AuthContext";
-
 import "../css/Songs.scss";
-
 const dotenv = require("dotenv");
 // eslint-disable-next-line
 const env = dotenv.config().parsed;
@@ -72,11 +70,16 @@ function Songs(props) {
 			setAlert(["Error Occurred", ...Alert]);
 		}
 	};
+
 	return (
 		<div className="main">
 			{currentSong ? (
 				<div className="currentSong">
-					{currentSong ? <img src={currentSong.cover} alt="currentSong" /> : ""}
+					{currentSong ? (
+						<img draggable="false" src={currentSong.cover} alt="currentSong" />
+					) : (
+						""
+					)}
 					<div>
 						<h1>{currentSong ? currentSong.title : ""}</h1>
 						<h2>{currentSong ? currentSong.artist : ""}</h2>

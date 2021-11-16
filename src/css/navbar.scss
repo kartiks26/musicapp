@@ -116,17 +116,17 @@
 .notification {
 	position: fixed;
 	top: 60px;
-	right: 30px;
-	max-width: 250px;
-	min-width: 250px;
-	min-height: 150px;
-	max-height: 150px;
+	right: 80px;
+	min-width: 200px;
+	min-height: max-content;
+	max-height: max-content;  
 	background-color: azure;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	overflow: auto;
-	padding: 3px 3px;
+	padding: 3px;
+	z-index: 1;
 
 	.alerts {
 		z-index: 1;

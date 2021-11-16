@@ -10,11 +10,20 @@
 .songs {
 	user-select: none;
 	background-color: $secondary;
-	display: flex;
+	// Older solution
+	// display: flex;
+	// justify-content: space-around;
+	// flex-wrap: wrap;
 
-	justify-content: space-around;
-	flex-wrap: wrap;
-	width: 100%;
+	// Grid Solution
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	justify-content: center;
+	// Older Width Solution
+	// width: 100%;
+
+	// Newer Width Solution
+	width: 90%;
 	min-height: max-content;
 	margin-top: 140px;
 	margin-bottom: 80px;
@@ -105,7 +114,8 @@
 	}
 }
 .song:hover {
-	box-shadow: 5px 5px 0px 0px transparentize($color: $primary, $amount: 0.5);
+	box-shadow: 0px 0px 25px 0px $quaternary;
+	transition: 0.3s;
 }
 
 h1,
