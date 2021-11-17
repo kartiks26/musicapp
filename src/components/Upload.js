@@ -69,7 +69,7 @@ function Upload() {
 			})
 			.catch((err) => {
 				setAlert(["Upload Failed", ...Alert]);
-				console.log(err);
+				console.log(err); 
 			});
 	};
 

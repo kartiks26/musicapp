@@ -28,14 +28,10 @@ function Navbar() {
 				</Link>
 				{setting ? (
 					<div
-						style={{
-							position: "absolute",
-							top: "60px",
-							right: "140px",
-							backgroundColor: "white",
-							width: "200px",
-							height: "200px",
+						onMouseOut={() => {
+							setSetting(false);
 						}}
+						className="setting"
 					></div>
 				) : (
 					""
@@ -44,13 +40,25 @@ function Navbar() {
 				{width > 426 ? (
 					<ul>
 						<Link className="Link" to="/">
-							Home
+							<svg
+								className="ActualControllers"
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="-2 -2 24 24"
+								width="21"
+								fill="currentColor"
+							>
+								<path d="M18 18V7.132l-8-4.8-8 4.8V18h4v-2.75a4 4 0 1 1 8 0V18h4zm-6 2v-4.75a2 2 0 1 0-4 0V20H2a2 2 0 0 1-2-2V7.132a2 2 0 0 1 .971-1.715l8-4.8a2 2 0 0 1 2.058 0l8 4.8A2 2 0 0 1 20 7.132V18a2 2 0 0 1-2 2h-6z"></path>
+							</svg>
 						</Link>
 						<Link className="Link" to="/Favorites">
-							Favorites
+							<img src="images/Liked.svg" alt="heart" />
 						</Link>
 						<svg
-							onClick={() => setSetting(!setting)}
+							className="ActualControllers"
+							onClick={() => {
+								setSetting(!setting);
+								setNotifications(false);
+							}}
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="-2 -2 24 24"
 							width="24"
@@ -60,18 +68,26 @@ function Navbar() {
 						</svg>
 						<Link className="Link" to="/upload">
 							<svg
-								// Upload
 								xmlns="http://www.w3.org/2000/svg"
-								viewBox="-5 -5 24 24"
+								viewBox="0 0 24 24"
 								width="28"
 								fill="white"
 							>
-								<path d="M8 3.414v5.642a1 1 0 1 1-2 0V3.414L4.879 4.536A1 1 0 0 1 3.464 3.12L6.293.293a1 1 0 0 1 1.414 0l2.829 2.828A1 1 0 1 1 9.12 4.536L8 3.414zM1 12h12a1 1 0 0 1 0 2H1a1 1 0 0 1 0-2z"></path>
+								<g data-name="Layer 2">
+									<g data-name="cloud-upload">
+										<rect width="24" height="24" opacity="0" />
+										<path d="M12.71 11.29a1 1 0 0 0-1.4 0l-3 2.9a1 1 0 1 0 1.38 1.44L11 14.36V20a1 1 0 0 0 2 0v-5.59l1.29 1.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z" />
+										<path d="M17.67 7A6 6 0 0 0 6.33 7a5 5 0 0 0-3.08 8.27A1 1 0 1 0 4.75 14 3 3 0 0 1 7 9h.1a1 1 0 0 0 1-.8 4 4 0 0 1 7.84 0 1 1 0 0 0 1 .8H17a3 3 0 0 1 2.25 5 1 1 0 0 0 .09 1.42 1 1 0 0 0 .66.25 1 1 0 0 0 .75-.34A5 5 0 0 0 17.67 7z" />
+									</g>
+								</g>
 							</svg>
 						</Link>
 						<section
-							onClick={() => setNotifications(!notifications)}
-							className="notifier Link"
+							onClick={() => {
+								setNotifications(!notifications);
+								setSetting(false);
+							}}
+							className="notifier "
 						>
 							<svg
 								// Notifications
@@ -84,7 +100,7 @@ function Navbar() {
 							>
 								<path d="M18 17H0a8.978 8.978 0 0 1 3-6.708V6a6 6 0 1 1 12 0v4.292A8.978 8.978 0 0 1 18 17zM6.17 18h5.66a3.001 3.001 0 0 1-5.66 0z"></path>
 							</svg>
-							<p>{Alert.length > 0 ? Alert.length : 0}</p>
+							<p align="center">{Alert.length > 0 ? Alert.length : 0}</p>
 						</section>
 						{user ? (
 							<Link to="/login">
@@ -108,19 +124,6 @@ function Navbar() {
 					<div className="mobileView">
 						{!user ? (
 							<>
-								<svg
-									onClick={() => setNotifications(!notifications)}
-									className="hamburger"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="-3 -2 24 24"
-									width="24"
-									fill="white"
-								>
-									<path
-										d="M18 17H0a8.978 8.978 0 0 1 3-6.708V6
-							a6 6 0 1 1 12 0v4.292A8.978 8.978 0 0 1 18 17zM6.17 18h5.66a3.001 3.001 0 0 1-5.66 0z"
-									></path>
-								</svg>
 								<button
 									onClick={() => {
 										setDrop(!drop);
@@ -145,10 +148,17 @@ function Navbar() {
 							}}
 						>
 							<Link className="Link" to="/">
-								Home
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="-2 -2 24 24"
+									width="24"
+									fill="currentColor"
+								>
+									<path d="M18 18V7.132l-8-4.8-8 4.8V18h4v-2.75a4 4 0 1 1 8 0V18h4zm-6 2v-4.75a2 2 0 1 0-4 0V20H2a2 2 0 0 1-2-2V7.132a2 2 0 0 1 .971-1.715l8-4.8a2 2 0 0 1 2.058 0l8 4.8A2 2 0 0 1 20 7.132V18a2 2 0 0 1-2 2h-6z"></path>
+								</svg>
 							</Link>
 							<Link className="Link" to="/Favorites">
-								Favorites
+								<img src="images/Liked.svg" alt="heart" />
 							</Link>
 							<Link className="Link" to="/upload">
 								<img alt="upload" src="/images/upload.svg" />
@@ -170,10 +180,11 @@ function Navbar() {
 					}}
 					className="notification"
 				>
+					<h2 align="start">Notifications</h2>
 					{Alert.map((item, index) => {
 						return (
 							<div className="alerts" key={index}>
-								<h3>{item}</h3>
+								<h3 align="center">{item}</h3>
 							</div>
 						);
 					})}

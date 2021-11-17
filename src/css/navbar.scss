@@ -12,29 +12,36 @@
 	z-index: 1;
 	.Logo {
 		text-decoration: none;
-		color: $primary;
-		font-size: 1.8rem;
+		color: $senary;
+		font-size: 2rem;
 		font-family: $paragraphFont;
 		font-weight: bold;
-		margin-left: 10px;
-		letter-spacing: 8px;
+		// margin-left: 10px;
+		letter-spacing: 4px;
 	}
 	ul {
 		display: flex;
 		align-items: center;
+		width: 350px;
+		justify-content: space-between;
+		padding-right: 15px;
 		.notifier {
-			margin: 0px 10px;
-			margin-top: 14px;
-
+			margin-top: 20px;
+			// margin-right: 20px;
 			p {
-				font-size: 0.6rem;
+				background-color: $quaternary;
+				font-size: 10px;
 				font-weight: bold;
 				z-index: 1;
-				color: $tertiary;
+				color: $secondary;
 				position: relative;
-				top: -25px;
-				left: 8px;
+				top: -35px;
+				left: 10px;
 				user-select: none;
+				border-radius: 50%;
+				padding-top: 2px;
+				width: 15px;
+				height: 15px;
 			}
 		}
 		.UserNotLoggedIn {
@@ -45,13 +52,14 @@
 			list-style: none;
 			padding: 0 10px;
 			text-decoration: none;
-			font-size: 1.1rem;
 			font-family: $fontBase;
 			font-weight: 100;
 			color: $primary;
+			// margin-left: 20px;
+			// margin-right: 10px;
 			img {
-				width: 40px;
-				height: 40px;
+				width: 30px;
+				height: 25px;
 			}
 		}
 		img {
@@ -60,11 +68,6 @@
 			border-radius: 50%;
 			user-select: none;
 		}
-	}
-}
-.navbar:hover {
-	.Logo {
-		color: $quaternary;
 	}
 }
 
@@ -97,7 +100,6 @@
 			font-family: $fontBase;
 			font-weight: 100;
 			color: $primary;
-			padding: 15px;
 			img {
 				width: 40px;
 				height: 40px;
@@ -117,32 +119,68 @@
 	position: fixed;
 	top: 60px;
 	right: 80px;
-	min-width: 200px;
-	min-height: max-content;
-	max-height: max-content;
-	background-color: azure;
+
+	min-width: 460px;
+	height: 500px;
+	background-color: $secondary;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	overflow: auto;
-	padding: 3px;
 	z-index: 1;
+	overflow-y: scroll;
 
+	border: 0.1rem solid $primary;
+
+	h2 {
+		width: 100%;
+		background-color: $secondary;
+		padding: 15px 20px;
+		color: $primary;
+		font-family: $fontBase;
+		letter-spacing: 2px;
+		border-bottom: $primary 2px solid;
+		margin-bottom: 15px;
+		font-size: 1.3rem;
+	}
 	.alerts {
 		z-index: 1;
 		line-height: 16px;
 		font-family: $fontBase;
-
-		background-color: #000000;
-		min-width: 100%;
-
-		padding: 7px 4px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: transparentize($color: $secondary, $amount: 1);
+		transition: all 0.2s ease;
+		min-width: 94%;
+		max-width: 94%;
+		min-height: 50px;
+		padding: 4px 4px;
 		margin: 5px 0px;
+		border-radius: 5px;
+		box-shadow: 10px 5px 10px 2px rgba(0, 0, 0, 0.75);
+		margin: 10px 0px;
 		h3 {
 			letter-spacing: 2.5px;
-			font-size: 0.8rem;
-			font-weight: 100;
+			font-size: 1.2rem;
+			font-weight: bold;
 			color: $primary;
 		}
 	}
+	.alerts:hover {
+		border: $primary 0.1px solid;
+	}
+}
+
+.notification::-webkit-scrollbar {
+	display: none;
+}
+.setting {
+	position: relative;
+	top: 230px;
+	left: 475px;
+	background-color: $tertiary;
+	border: $primary 1px solid;
+	width: 430px;
+	height: 400px;
 }

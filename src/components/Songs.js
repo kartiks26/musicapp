@@ -23,7 +23,6 @@ function Songs(props) {
 	const [lastPlayed, setLastPlayed] = useState(null);
 	const [PlayPause, setPlayPause] = useState(false);
 
-
 	function muteAudio() {
 		var audios = document.getElementsByTagName("audio"),
 			i,
