@@ -9,6 +9,7 @@ import AuthContext from "./context/AuthContext";
 import { useContext } from "react";
 function App() {
 	const context = useContext(AuthContext);
+
 	const { data, favoriteSongs } = context;
 	return (
 		<div className="App">
