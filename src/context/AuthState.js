@@ -4,7 +4,9 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
 import { getDocs, query, where } from "firebase/firestore";
-
+import writeUserData from "../utils/realtimeDataBase";
+// https://users-e2358-default-rtdb.firebaseio.com/
+import { getDatabase, ref, set, onValue } from "@firebase/database";
 const AuthState = (props) => {
 	const [user, setUser] = useState(null);
 	const [currentSong, setCurrentSong] = useState(null);
@@ -16,6 +18,7 @@ const AuthState = (props) => {
 	const [Alert, setAlert] = useState([]);
 	const login = (user) => {
 		setUser(user);
+		writeUserData(user.uid, user.displayName, user.photoURL);
 		localStorage.setItem("MusicUser", JSON.stringify(user));
 		// store user in cookies
 	};
@@ -41,6 +44,7 @@ const AuthState = (props) => {
 		messagingSenderId: "322018798621",
 		appId: "1:322018798621:web:3306a362e605c6a29f2af4",
 		storageBucket: "gs://users-e2358.appspot.com",
+		databaseURL: "https://users-e2358-default-rtdb.firebaseio.com/",
 	});
 	const db = getFirestore();
 
@@ -82,6 +86,7 @@ const AuthState = (props) => {
 			setAlert(["Please Login to add to favorites", ...Alert]);
 		}
 	};
+	const [realtimeData, setRealtimeData] = useState([]);
 
 	useEffect(() => {
 		if (user) {
@@ -94,16 +99,20 @@ const AuthState = (props) => {
 				setFavoriteSongs(songs);
 				setAlert(["Songs Loading", ...Alert]);
 			});
+
+			const realtimeDb = getDatabase();
+
+			const userRef = ref(realtimeDb, "users/" + user.uid);
+			onValue(userRef, (snapshot) => {
+				const data = snapshot.val();
+				if (data) {
+					setRealtimeData(data);
+				}
+			});
 		}
 		// eslint-disable-next-line
 	}, [user]);
 
-	// useEffect(() => {
-	// 	data.map((song) => {
-	// 		ShufflingSongs.push(song.SongUrl);
-	// 	});
-	// 	setShuffleSongs(ShufflingSongs);
-	// }, [data]);
 	return (
 		<AuthContext.Provider
 			value={{
@@ -123,6 +132,7 @@ const AuthState = (props) => {
 				setUploadedSong,
 				Alert,
 				setAlert,
+				realtimeData,
 				// ShuffleSongs,
 				// setShuffleSongs,
 			}}

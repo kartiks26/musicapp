@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { useHistory } from "react-router";
+
 function Login() {
 	const firebaseConfig = {
 		apiKey: "AIzaSyDLj-taD0dvM6ETYt4PyNsZBWH-mZwgSdI",
@@ -18,24 +19,24 @@ function Login() {
 		messagingSenderId: "322018798621",
 		appId: "1:322018798621:web:3306a362e605c6a29f2af4",
 		storageBucket: "gs://users-e2358.appspot.com",
+		databaseURL: "https://users-e2358-default-rtdb.firebaseio.com/",
 	};
 	initializeApp(firebaseConfig);
 
 	const context = useContext(AuthContext);
 
-	const { setUser, login, Alert, setAlert } = context;
+	const { setUser, login, Alert, setAlert, user, realtimeData } = context;
 	const history = useHistory();
 	const GoogleLogin = () => {
 		const provider = new GoogleAuthProvider();
 		const auth = getAuth();
 		signInWithPopup(auth, provider)
 			.then((res) => {
-				setUser(res.user);
-				login(res.user);
 				setAlert(["Login Successfully", ...Alert]);
 
+				setUser(res.user);
+				login(res.user);
 				history.push("/");
-				console.log(res.user);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -47,9 +48,10 @@ function Login() {
 		const auth = getAuth();
 		signInWithPopup(auth, provider)
 			.then((res) => {
+				setAlert(["Login Successfully", ...Alert]);
+
 				setUser(res.user);
 				login(res.user);
-				setAlert(["Login Successfully", ...Alert]);
 
 				history.push("/");
 			})
@@ -64,9 +66,10 @@ function Login() {
 
 		signInWithPopup(auth, provider)
 			.then((res) => {
+				setAlert(["Login Successfully", ...Alert]);
+
 				setUser(res.user);
 				login(res.user);
-				setAlert(["Login Successfully", ...Alert]);
 
 				history.push("/");
 			})
@@ -76,30 +79,75 @@ function Login() {
 				console.log(err);
 			});
 	};
+	const Logout = () => {
+		localStorage.removeItem("MusicUser");
+		setUser(null);
+		setAlert(["Logged Out Successfully", ...Alert]);
+	};
 	return (
-		<div className="Authentication">
-			<img
-				alt="Google"
-				onClick={() => {
-					GoogleLogin();
-				}}
-				src="/images/Google.svg"
-			/>
-			<img
-				alt="Facebook"
-				onClick={() => {
-					FacebookLogin();
-				}}
-				src="/images/Facebook.svg"
-			/>
-			<img
-				alt="Twitter"
-				onClick={() => {
-					TwitterLogin();
-				}}
-				src="/images/Twitter.svg"
-			/>
-		</div>
+		<>
+			{user ? (
+				<div className="loggedIn">
+					<div className="LoginHeaders">
+						<h1>welcome {user.displayName} ,</h1>
+
+						<button
+							onClick={() => {
+								Logout();
+							}}
+						>
+							Logout
+						</button>
+					</div>
+					<div className="LoginBody">
+						<img src={user.photoURL} alt="user" />
+						<div className="folCount">
+							<h1 align="center">{realtimeData ? realtimeData.uploads : 0}</h1>
+							<p>Uploads </p>
+						</div>
+						<div className="folCount">
+							<h1 align="center">
+								{realtimeData ? realtimeData.followers : 0}
+							</h1>
+							<p>Followers </p>
+						</div>
+						<div className="folCount">
+							<h1 align="center">
+								{realtimeData ? realtimeData.following : 0}
+							</h1>
+							<p>Following </p>
+						</div>
+					</div>
+					<div className="UserPosts">
+						<h1>posts</h1>
+					</div>
+				</div>
+			) : (
+				<div className="Authentication">
+					<img
+						alt="Google"
+						onClick={() => {
+							GoogleLogin();
+						}}
+						src="/images/Google.svg"
+					/>
+					<img
+						alt="Facebook"
+						onClick={() => {
+							FacebookLogin();
+						}}
+						src="/images/Facebook.svg"
+					/>
+					<img
+						alt="Twitter"
+						onClick={() => {
+							TwitterLogin();
+						}}
+						src="/images/Twitter.svg"
+					/>
+				</div>
+			)}
+		</>
 	);
 }
 

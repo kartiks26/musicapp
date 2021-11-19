@@ -14,3 +14,73 @@
 		cursor: pointer;
 	}
 }
+.loggedIn {
+	display: flex;
+	flex-direction: column;
+	margin-top: 100px;
+	color: $primary;
+	width: 100%;
+	.LoginHeaders {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		flex-wrap: wrap;
+		h1 {
+			font-size: 1.9rem;
+			font-family: $fontBase;
+			color: $primary;
+		}
+		button {
+			width: 70px;
+			height: 30px;
+			margin-top: 15px;
+			border-radius: 5px;
+			background-color: $primary;
+			color: $secondary;
+			font-size: 0.9rem;
+			letter-spacing: 2px;
+			font-weight: bold;
+			border: none;
+			cursor: pointer;
+			&:hover {
+				background-color: $quaternary;
+				color: $secondary;
+			}
+			&:focus {
+				outline: none;
+			}
+		}
+	}
+	.LoginBody {
+		width: 40%;
+		margin-top: 60px;
+		display: flex;
+		justify-content: space-around;
+		align-self: center;
+		align-items: center;
+		color: $primary;
+		flex-wrap: wrap;
+		padding: 25px;
+		.folCount {
+			margin-top: 15px;
+			font-size: 0.9rem;
+
+			font-family: $paragraphFont;
+			color: $primary;
+			p {
+				font-size: 1.2rem;
+				font-weight: 900;
+			}
+		}
+		img {
+			transform: scale(1.2);
+			border-radius: 50%;
+			max-width: 100px;
+			max-height: 100px;
+		}
+	}
+	.UserPosts {
+		margin-top: 85px;
+		align-self: center;
+	}
+}

@@ -122,25 +122,60 @@ function Navbar() {
 					</ul>
 				) : (
 					<div className="mobileView">
-						{!user ? (
-							<>
-								<button
+						<div
+							style={{
+								display: "flex",
+								alignItems: "center",
+								justifyContent: "center",
+							}}
+						>
+							<section
+								style={{
+									marginTop: "20px",
+								}}
+								onClick={() => {
+									setNotifications(!notifications);
+									setSetting(false);
+								}}
+								className="notifier "
+							>
+								<svg
+									// Notifications
+
+									onClick={() => setNotifications(!notifications)}
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="-3 -2 24 24"
+									width="26"
+									fill="white"
+								>
+									<path d="M18 17H0a8.978 8.978 0 0 1 3-6.708V6a6 6 0 1 1 12 0v4.292A8.978 8.978 0 0 1 18 17zM6.17 18h5.66a3.001 3.001 0 0 1-5.66 0z"></path>
+								</svg>
+								<p align="center">{Alert.length > 0 ? Alert.length : 0}</p>
+							</section>
+							{!user ? (
+								<>
+									<svg
+										onClick={() => {
+											setDrop(!drop);
+										}}
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="-5 -7 24 24"
+										width="48"
+										fill="white"
+									>
+										<path d="M1 0h5a1 1 0 1 1 0 2H1a1 1 0 1 1 0-2zm7 8h5a1 1 0 0 1 0 2H8a1 1 0 1 1 0-2zM1 4h12a1 1 0 0 1 0 2H1a1 1 0 1 1 0-2z"></path>
+									</svg>
+								</>
+							) : (
+								<img
+									alt="User"
 									onClick={() => {
 										setDrop(!drop);
 									}}
-								>
-									Menu
-								</button>
-							</>
-						) : (
-							<img
-								alt="User"
-								onClick={() => {
-									setDrop(!drop);
-								}}
-								src={user.photoURL}
-							/>
-						)}
+									src={user.photoURL}
+								/>
+							)}
+						</div>
 						<div
 							className="Expand"
 							style={{

@@ -29,7 +29,7 @@
 			margin-top: 20px;
 			// margin-right: 20px;
 			p {
-				background-color: $quaternary;
+				background-color: $quinary;
 				font-size: 10px;
 				font-weight: bold;
 				z-index: 1;
@@ -120,8 +120,8 @@
 	top: 60px;
 	right: 80px;
 
-	min-width: 460px;
-	height: 500px;
+	min-width: 30%;
+	height: 60%;
 	background-color: $secondary;
 	display: flex;
 	flex-direction: column;
@@ -129,7 +129,6 @@
 	overflow: auto;
 	z-index: 1;
 	overflow-y: scroll;
-
 	border: 0.1rem solid $primary;
 
 	h2 {
@@ -165,6 +164,7 @@
 			font-size: 1.2rem;
 			font-weight: bold;
 			color: $primary;
+			line-height: 25px;
 		}
 	}
 	.alerts:hover {
