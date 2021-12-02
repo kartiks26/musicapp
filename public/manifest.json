@@ -2,6 +2,7 @@
 	"short_name": "Music App",
 	"name": "Music App",
 	"description": "Music App To upload Your Own Songs And Make Them Public As You Go",
+	"favicon": "/favicon.ico",
 	"icons": [
 		{
 			"src": "favicon.ico",
