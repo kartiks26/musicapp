@@ -50,9 +50,21 @@ function Navbar() {
 								<path d="M18 18V7.132l-8-4.8-8 4.8V18h4v-2.75a4 4 0 1 1 8 0V18h4zm-6 2v-4.75a2 2 0 1 0-4 0V20H2a2 2 0 0 1-2-2V7.132a2 2 0 0 1 .971-1.715l8-4.8a2 2 0 0 1 2.058 0l8 4.8A2 2 0 0 1 20 7.132V18a2 2 0 0 1-2 2h-6z"></path>
 							</svg>
 						</Link>
+						<Link className="Link" to="/users">
+							<svg
+								className="ActualControllers"
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="-2.5 -2.5 24 24"
+								width="24"
+								fill="currentColor"
+							>
+								<path d="M8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12zm6.32-1.094l3.58 3.58a1 1 0 1 1-1.415 1.413l-3.58-3.58a8 8 0 1 1 1.414-1.414z"></path>
+							</svg>
+						</Link>
 						<Link className="Link" to="/Favorites">
 							<img src="images/Liked.svg" alt="heart" />
 						</Link>
+
 						<svg
 							className="ActualControllers"
 							onClick={() => {

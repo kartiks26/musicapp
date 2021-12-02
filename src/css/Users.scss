@@ -1,0 +1,178 @@
+@import "../variable";
+@mixin random-bgr() {
+	background: rgb(random(255), random(255), random(255));
+}
+.UsersParent {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 120px;
+	height: auto;
+	.users {
+		width: 90%;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+		row-gap: 20px;
+		column-gap: 20px;
+		//  center the content
+
+		&::-webkit-scrollbar {
+			width: 2px;
+			background-color: rgb(0, 0, 0);
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: rgb(255, 235, 235);
+			height: fit-content;
+			height: 10px;
+		}
+		.user {
+			background-color: $quinary;
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+			color: $primary;
+			font-family: $paragraphFont;
+			img {
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				margin: 1rem;
+			}
+			button {
+				background-color: $primary;
+				color: $quinary;
+				border: none;
+				border-radius: 5px;
+				padding: 0.32rem;
+				letter-spacing: 1.5px;
+				font-weight: bold;
+				font-family: $paragraphFont;
+				&:hover {
+					background-color: $secondary;
+					color: $quinary;
+				}
+				&:focus {
+					outline: none;
+				}
+			}
+		}
+	}
+}
+.UserModalParent {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: absolute;
+	top: 100px;
+	background-color: black;
+	.userModal {
+		width: 90%;
+		height: 100%;
+		background-color: $secondary;
+		color: $primary;
+		&::-webkit-scrollbar {
+			width: 2px;
+			background-color: rgb(0, 0, 0);
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: rgb(255, 235, 235);
+			height: fit-content;
+			height: 10px;
+		}
+
+		.userModalBody {
+			margin: 25px;
+			display: flex;
+
+			align-items: center;
+			flex-direction: column;
+			justify-content: space-around;
+			.userModalBody-col1 {
+				display: flex;
+				justify-content: space-evenly;
+				align-items: center;
+				flex-wrap: wrap;
+				width: 65%;
+				.userModal-col1-col0 {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					h1 {
+						font-size: 1.2rem;
+						margin-top: 8px;
+						font-family: $paragraphFont;
+						&::before {
+							content: "@";
+							font-size: 1rem;
+							align-self: center;
+						}
+					}
+					img {
+						width: 80px;
+						height: 80px;
+						border-radius: 50%;
+					}
+				}
+			}
+			.ModalCounts {
+				margin-top: 20px;
+
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+				div {
+					font-weight: bold;
+					margin: 0 20px;
+					font-family: $paragraphFont;
+					h1 {
+						font-size: 1.6rem;
+					}
+				}
+			}
+
+			.UserPosts {
+				width: 100%;
+				margin-top: 60px;
+				display: flex;
+				flex-direction: column;
+			}
+		}
+	}
+}
+.CloseButton {
+	position: relative;
+	@media screen and (max-width: 768px) {
+		top: -200px;
+	}
+	top: -80px;
+	right: -180px;
+	color: $quinary;
+	&:hover {
+		fill: $quinary;
+	}
+	&:focus {
+		outline: none;
+	}
+}
+.FollowButton {
+	border: none;
+	border-radius: 5px;
+	padding: 0.32rem;
+	letter-spacing: 1.5px;
+	font-weight: bold;
+	font-family: $paragraphFont;
+	@media screen and (max-width: 768px) {
+		transform: translate(-35px, 30px);
+	}
+	&:hover {
+		background-color: $quaternary;
+		color: $quinary;
+	}
+	&:focus {
+		outline: none;
+	}
+}
+ 

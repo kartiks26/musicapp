@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Favorites from "./components/Favorites";
 import AuthContext from "./context/AuthContext";
 import { useContext } from "react";
+import Users from "./components/Users";
 function App() {
 	const context = useContext(AuthContext);
 
@@ -21,15 +22,31 @@ function App() {
 					</Route>
 					<Route exact path="/Favorites">
 						<Navbar />
-						<Favorites data={favoriteSongs} />
+						<div
+							style={{
+								marginTop: "80px",
+							}}
+						>
+							<Favorites data={favoriteSongs} />
+						</div>
 					</Route>
 					<Route exact path="/">
 						<Navbar />
-						<Songs data={data} />
+						<div
+							style={{
+								marginTop: "80px",
+							}}
+						>
+							<Songs data={data} />
+						</div>
 					</Route>
 					<Route exact path="/login">
 						<Navbar />
 						<Login />
+					</Route>
+					<Route exact path="/users">
+						<Navbar />
+						<Users />
 					</Route>
 				</Switch>
 			</Router>

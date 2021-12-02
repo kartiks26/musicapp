@@ -43,5 +43,28 @@
 			src="https://kit.fontawesome.com/950a00ebb4.js"
 			crossorigin="anonymous"
 		></script>
+		<script>
+			if ("serviceWorker" in navigator) {
+				window.addEventListener("load", function () {
+					navigator.serviceWorker
+						.register("serviceWorker.js", {
+							scope: "/",
+						})
+						.then(
+							function (registration) {
+								// Registration was successful
+								console.log(
+									"ServiceWorker registration successful with scope: ",
+									registration.scope
+								);
+							},
+							function (err) {
+								// registration failed :(
+								console.log("ServiceWorker registration failed: ", err);
+							}
+						);
+				});
+			}
+		</script>
 	</body>
 </html>

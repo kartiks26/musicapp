@@ -30,11 +30,11 @@
 }
 .songHeaders {
 	display: flex;
-	justify-content: space-between;
+	max-width: 70%;
+	justify-content: space-evenly;
 	align-items: center;
-	width: 90%;
-	margin-top: 80px;
-	position: fixed;
+	position: absolute;
+	margin-top: 45px;
 	p {
 		font-size: 1.5rem;
 		letter-spacing: 2px;

@@ -30,4 +30,19 @@ function writeUserData(userUId, name, imageUrl) {
 		}
 	});
 }
+export function getAllUsers() {
+	const db = getDatabase();
+	const usersRef = ref(db, "users");
+	return onValue(usersRef, (snapshot) => {
+		const data = snapshot.val();
+		if (!data) {
+			return [];
+		}
+		return Object.keys(data).map((key) => ({
+			key,
+			...data[key],
+		}));
+	});
+}
+
 export default writeUserData;
