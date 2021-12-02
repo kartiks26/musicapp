@@ -5,17 +5,17 @@
 	"favicon": "/favicon.ico",
 	"icons": [
 		{
-			"src": "logo512.png",
+			"src": "images/logo512.png",
 			"type": "image/png",
 			"sizes": "512x512"
 		},
 		{
-			"src": "logo192.png",
+			"src": "images/logo192.png",
 			"type": "image/png",
 			"sizes": "192x192"
 		},
 		{
-			"src": "logo1000.png",
+			"src": "images/logo1000.png",
 			"type": "image/png",
 			"sizes": "1000x1000"
 		}
@@ -27,8 +27,8 @@
 	"prefer_related_applications ": true,
 	"screenshots": [
 		{
-			"src": "images/Screenshot1.jpg",
-			"type": "image/jpe",
+			"src": "screenshots/Screenshot1.jpg",
+			"type": "image/jpg",
 			"media": "512x512"
 		}
 	]
