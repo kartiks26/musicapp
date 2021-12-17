@@ -13,10 +13,10 @@ const urlsToCache = [
 	"/static/js/vendors~main.chunk.js",
 	"/static/js/main.chunk.js",
 	"/images/Liked.svg",
-	"/images/Facebook.svg",
-	"/images/Twitter.svg",
-	"/images/Google.svg",
-	"/images/NotLiked.svg",
+	// "/images/Facebook.svg",
+	// "/images/Twitter.svg",
+	// "/images/Google.svg",
+	// "/images/NotLiked.svg",
 ];
 self.addEventListener("install", function (event) {
 	// Perform install steps
