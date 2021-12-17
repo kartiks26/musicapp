@@ -1,4 +1,6 @@
 let CACHE_NAME = "my-site-cache-v1";
+// add complete site to cache
+
 const urlsToCache = [
 	"/",
 	"/index.html",
@@ -11,6 +13,10 @@ const urlsToCache = [
 	"/static/js/vendors~main.chunk.js",
 	"/static/js/main.chunk.js",
 	"/images/Liked.svg",
+	"/images/Facebook.svg",
+	"/images/Twitter.svg",
+	"/images/Google.svg",
+	"/images/NotLiked.svg",
 ];
 self.addEventListener("install", function (event) {
 	// Perform install steps
@@ -34,4 +40,4 @@ self.addEventListener("fetch", function (event) {
 
 // set update on reload true
 
-// setup service worker for offline
+// custom install event
