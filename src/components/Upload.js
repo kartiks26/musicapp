@@ -61,10 +61,10 @@ function Upload() {
 			.then((res) => {
 				// res.data.songData._id;
 				console.log(res.data.songData._id);
-				set(ref(db, "users/" + user.uid), {
-					0: res.data.songData._id,
-				});
-				ref(`user${user.uid}`).push(res.data.songData._id);
+				// set(ref(db, "users/" + user.uid), {
+				// 	0: res.data.songData._id,
+				// });
+				// ref(`user${user.uid}`).push(res.data.songData._id);
 				setAlert(["Song Is Uploaded", ...Alert]);
 				setImageProgress(0);
 				setSongProgress(0);
