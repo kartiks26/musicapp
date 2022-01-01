@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "../context/AuthContext";
 import "../css/Login.scss";
 import {
@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { useHistory } from "react-router";
+import Songs from "./Songs";
 
 function Login() {
 	const firebaseConfig = {
@@ -84,6 +85,20 @@ function Login() {
 		setUser(null);
 		setAlert(["Logged Out Successfully", ...Alert]);
 	};
+	const [uploadedSong, setUploadedSong] = useState([]);
+	useEffect(() => {
+		if (user) {
+			fetch(
+				`https://incandescent-act-production.up.railway.app/upload/getSongsByUser/${user.uid}`
+			).then((res) => {
+				res.json().then((data) => {
+					console.log(data);
+					setUploadedSong(data.songs);
+				});
+			});
+		}
+	}, []);
+
 	return (
 		<>
 			{user ? (
@@ -119,7 +134,7 @@ function Login() {
 						</div>
 					</div>
 					<div className="UserPosts">
-						<h1>posts</h1>
+						<Songs data={uploadedSong} />
 					</div>
 				</div>
 			) : (

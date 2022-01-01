@@ -26,6 +26,7 @@ function writeUserData(userUId, name, imageUrl) {
 				followers: 0,
 				following: 0,
 				uploads: 0,
+				userId: userUId,
 			});
 		}
 	});

@@ -4,6 +4,7 @@ import { getDatabase, ref, set, onValue } from "@firebase/database";
 import "../css/Users.scss";
 import AuthContext from "../context/AuthContext";
 import Favorites from "./Favorites";
+import Songs from "./Songs";
 function Users() {
 	const firebaseConfig = {
 		apiKey: "AIzaSyDLj-taD0dvM6ETYt4PyNsZBWH-mZwgSdI",
@@ -18,6 +19,20 @@ function Users() {
 	const [userModal, setUserModal] = useState(null);
 	const context = useContext(AuthContext);
 	const { user, setUser, Alert } = context;
+	const [userID, setUserID] = useState(null);
+	const [userSongData, setUserSongData] = useState([]);
+	useEffect(() => {
+		if (userID) {
+			fetch(
+				`https://incandescent-act-production.up.railway.app/upload/getSongsByUser/${userID}`
+			).then((res) => {
+				res.json().then((data) => {
+					console.log(data);
+					setUserSongData(data.songs);
+				});
+			});
+		}
+	}, [userID]);
 	let data;
 
 	useEffect(() => {
@@ -69,18 +84,28 @@ function Users() {
 										viewBox="-6 -6 24 24"
 										width="38"
 										fill="white"
-										onClick={() => setUserModal(null)}
+										onClick={() => {
+											setUserModal(null);
+											setUserSongData([]);
+										}}
 									>
 										<path d="M7.314 5.9l3.535-3.536A1 1 0 1 0 9.435.95L5.899 4.485 2.364.95A1 1 0 1 0 .95 2.364l3.535 3.535L.95 9.435a1 1 0 1 0 1.414 1.414l3.535-3.535 3.536 3.535a1 1 0 1 0 1.414-1.414L7.314 5.899z"></path>
 									</svg>
 									{userModal.key == user.uid ? (
 										""
 									) : (
-										<button className="FollowButton">Follow</button>
+										<button
+											onClick={() => {
+												console.log("USER IS GETTING FOLLOWED");
+											}}
+											className="FollowButton"
+										>
+											Follow
+										</button>
 									)}
 								</div>
 								<div className="UserPosts">
-									<Favorites />
+									<Songs data={userSongData} />
 								</div>
 							</div>
 						</div>
@@ -97,6 +122,7 @@ function Users() {
 									<div
 										onClick={() => {
 											setUserModal(e);
+											setUserID(e.userId);
 											console.log(e);
 										}}
 										className="user"

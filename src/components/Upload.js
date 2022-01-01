@@ -49,7 +49,7 @@ function Upload() {
 			title: newUser.title,
 			songUrl: uploadedSong,
 			coverUrl: uploadedImage,
-			userId: user.uid,
+			userId: user.uid || "",
 		};
 
 		axios
