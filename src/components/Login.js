@@ -84,6 +84,22 @@ function Login() {
 		localStorage.removeItem("MusicUser");
 		setUser(null);
 		setAlert(["Logged Out Successfully", ...Alert]);
+		if (Notification.permission === "granted") {
+			var options = {
+				body: "Enjoy your music on The Go At Musicano",
+				icon: "/images/logo192.png",
+				dir: "ltr",
+				image:
+					"https://www.musicnotes.com/images2/promos/store/900x520_piano-min.jpg",
+				tag: "musicano",
+			};
+			var notification = new Notification("Logged Out Successfully", options);
+			notification.onclick = function () {
+				window.open("/login");
+			};
+		} else {
+			Notification.requestPermission();
+		}
 	};
 	const [uploadedSong, setUploadedSong] = useState([]);
 	useEffect(() => {

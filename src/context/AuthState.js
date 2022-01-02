@@ -20,6 +20,22 @@ const AuthState = (props) => {
 		setUser(user);
 		writeUserData(user.uid, user.displayName, user.photoURL);
 		localStorage.setItem("MusicUser", JSON.stringify(user));
+		var options = {
+			body: "Enjoy your music on The Go At Musicano",
+			icon: "/images/logo192.png",
+			dir: "ltr",
+			image:
+				"https://media.npr.org/assets/img/2019/10/11/jazznight_wide-84b0822a7bee05759ccef8b496fcb5fbe4e7bec9-s1100-c50.jpg",
+			tag: "musicano",
+		};
+		// https://developers.google.com/web/fundamentals/push-notifications/display-a-notification DOCS
+		if (Notification.permission === "granted") {
+			var notification = new Notification("Successfully Logged In", options);
+			notification.onclick = function () {
+				window.open("/");
+			};
+		}
+
 		// store user in cookies
 	};
 	const url = "https://incandescent-act-production.up.railway.app";

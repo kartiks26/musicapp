@@ -47,9 +47,16 @@
 		<script>
 			if ("serviceWorker" in navigator) {
 				window.addEventListener("load", function () {
+					if (Notification.permission !== "granted") {
+						Notification.requestPermission();
+					}
 					navigator.serviceWorker
 						.register("serviceWorker.js", {
 							scope: "/",
+							skipWaiting: true,
+							registerHttps: true,
+							register: true,
+							runtimeCaching="true",
 						})
 						.then(
 							function (registration) {
