@@ -231,7 +231,7 @@ function Navbar() {
 					{Alert.map((item, index) => {
 						return (
 							<div className="alerts" key={index}>
-								<h3 align="center">{item}</h3>
+								<h3>{item}</h3>
 							</div>
 						);
 					})}

@@ -1,7 +1,7 @@
 import AuthContext from "./AuthContext";
 import React, { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { deleteDoc, getFirestore } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
 import { getDocs, query, where } from "firebase/firestore";
 import writeUserData from "../utils/realtimeDataBase";
@@ -92,7 +92,11 @@ const AuthState = (props) => {
 					console.log(docRef);
 					setFavoriteSongs([...favoriteSongs, song]);
 				} else {
-					console.log("Song already in favorites");
+					// delete the song  from the database
+					setFavoriteSongs(favoriteSongs.filter((song) => song !== song));
+
+					await deleteDoc(querySnapshot.docs[0].ref);
+
 					setAlert(["Song already in favorites", ...Alert]);
 				}
 			} catch (e) {

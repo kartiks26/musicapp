@@ -161,10 +161,12 @@
 		margin: 10px 0px;
 		h3 {
 			letter-spacing: 2.5px;
-			font-size: 1.2rem;
+			font-size: 1em;
 			font-weight: bold;
 			color: $primary;
 			line-height: 25px;
+			align-self: flex-start;
+			width: 100%;
 		}
 	}
 	.alerts:hover {
