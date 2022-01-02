@@ -37,7 +37,7 @@ function App() {
 								marginTop: "80px",
 							}}
 						>
-							<Songs data={data} />
+							<Songs data={data} useHeader={true} />
 						</div>
 					</Route>
 					<Route exact path="/login">

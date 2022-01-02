@@ -66,7 +66,7 @@ function Users() {
 									</div>
 									<div className="ModalCounts">
 										<div>
-											<h1 align="center">{userModal.uploads}</h1>
+											<h1 align="center">{userSongData.length}</h1>
 											<p>Uploads </p>
 										</div>
 										<div>
@@ -105,7 +105,7 @@ function Users() {
 									)}
 								</div>
 								<div className="UserPosts">
-									<Songs data={userSongData} />
+									<Songs data={userSongData} useHeader={false} />
 								</div>
 							</div>
 						</div>

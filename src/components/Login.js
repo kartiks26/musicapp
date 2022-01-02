@@ -117,7 +117,7 @@ function Login() {
 					<div className="LoginBody">
 						<img src={user.photoURL} alt="user" />
 						<div className="folCount">
-							<h1 align="center">{realtimeData ? realtimeData.uploads : 0}</h1>
+							<h1 align="center">{uploadedSong.length}</h1>
 							<p>Uploads </p>
 						</div>
 						<div className="folCount">
@@ -134,7 +134,7 @@ function Login() {
 						</div>
 					</div>
 					<div className="UserPosts">
-						<Songs data={uploadedSong} />
+						<Songs data={uploadedSong} useHeader={false} />
 					</div>
 				</div>
 			) : (

@@ -6,7 +6,7 @@ function Favorites() {
 	const { favoriteSongs } = context;
 	return (
 		<div>
-			<Songs data={favoriteSongs} />
+			<Songs data={favoriteSongs} useHeader={true} />
 		</div>
 	);
 }

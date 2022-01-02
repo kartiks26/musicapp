@@ -28,21 +28,28 @@
 			height: 10px;
 		}
 		.user {
-			background-color: $quinary;
+			background-color: $primary;
+			max-width: 250px;
+			max-height: 60px;
+			border-radius: 20px;
+			border-top-left-radius: 50px;
+			border-bottom-left-radius: 110px;
 			display: flex;
-			justify-content: space-evenly;
+			justify-content: space-between;
 			align-items: center;
-			color: $primary;
-			font-family: $paragraphFont;
+			color: $secondary;
+			font-family: $headingFont;
 			img {
-				width: 40px;
-				height: 40px;
+				width: 45px;
+				height: 45px;
 				border-radius: 50%;
+				border: 2px solid $secondary;
 				margin: 1rem;
 			}
 			button {
-				background-color: $primary;
-				color: $quinary;
+				background-color: $secondary;
+				color: $primary;
+				margin: 0px 10px;
 				border: none;
 				border-radius: 5px;
 				padding: 0.32rem;
@@ -175,4 +182,3 @@
 		outline: none;
 	}
 }
- 
