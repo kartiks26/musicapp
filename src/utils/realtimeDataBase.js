@@ -1,7 +1,6 @@
 // https://users-e2358-default-rtdb.firebaseio.com/
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, onValue } from "@firebase/database";
-
 const firebaseConfig = {
 	apiKey: "AIzaSyDLj-taD0dvM6ETYt4PyNsZBWH-mZwgSdI",
 	authDomain: "users-e2358.firebaseapp.com",
@@ -12,7 +11,6 @@ const firebaseConfig = {
 	databaseURL: "https://users-e2358-default-rtdb.firebaseio.com/",
 };
 initializeApp(firebaseConfig);
-
 function writeUserData(userUId, name, imageUrl) {
 	const db = getDatabase();
 

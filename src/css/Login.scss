@@ -1,17 +1,108 @@
 @import "../variable";
 .Authentication {
+	// display: flex;
+	// width: 100%;
+	// height: 100vh;
+	// justify-content: center;
+	// align-items: center;
+	// background-color: $secondary;
+	// img {
+	// 	width: 50px;
+	// 	height: 50px;
+	// }
+	// img:hover {
+	// 	cursor: pointer;
+	// }
+	margin-top: 100px;
 	display: flex;
-	width: 100%;
-	height: 100vh;
+	flex-wrap: wrap;
 	justify-content: center;
-	align-items: center;
-	background-color: $secondary;
-	img {
-		width: 50px;
-		height: 50px;
+	.AuthBanner {
+		max-width: 70%;
+		img {
+			width: 80%;
+		}
 	}
-	img:hover {
-		cursor: pointer;
+	.AuthBody {
+		display: flex;
+		color: $primary;
+		align-items: center;
+		margin-top: 25px;
+		label {
+			align-self: center;
+			margin-top: 25px;
+		}
+		.MainForm {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			height: 50%;
+			width: 100%;
+			p {
+				font-family: $paragraphFont;
+				margin-bottom: 5px;
+			}
+			a {
+				color: $quaternary;
+				text-decoration: none;
+				cursor: pointer;
+				&:hover {
+					color: $quinary;
+				}
+			}
+			input {
+				width: 340px;
+				margin: 8px 0;
+				padding: 10px 10px;
+				font: $fontBase;
+				outline: none;
+				color: $primary;
+				border: none;
+				background-color: $secondary;
+				border-radius: 5px;
+				&:focus {
+					outline: $quaternary solid 1px;
+				}
+				&:hover {
+					outline: $quaternary solid 1px;
+				}
+			}
+			input[type="submit"] {
+				cursor: pointer;
+				background-color: $quaternary;
+				color: $secondary;
+				font-family: $fontBase;
+				font-size: 0.8em;
+				border: none;
+				&:hover {
+					cursor: pointer;
+					background-color: $quinary;
+					border: none;
+					outline: none;
+					color: $primary;
+				}
+			}
+			#profileImage {
+				display: none;
+			}
+			#profImg {
+				img {
+					width: 80%;
+					height: 130px;
+					border-radius: 50%;
+				}
+			}
+			.AUthProviders {
+				cursor: pointer;
+				display: flex;
+				justify-content: space-evenly;
+				width: 80%;
+				img {
+					width: 50px;
+					height: 80px;
+				}
+			}
+		}
 	}
 }
 .loggedIn {
@@ -87,3 +178,5 @@
 .UsersAndLoginBody {
 	display: flex;
 }
+
+// media queries

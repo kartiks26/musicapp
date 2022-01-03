@@ -11,6 +11,12 @@ import {
 import { initializeApp } from "firebase/app";
 import { useHistory } from "react-router";
 import Songs from "./Songs";
+import {
+	getStorage,
+	uploadBytesResumable,
+	getDownloadURL,
+	ref,
+} from "firebase/storage";
 
 function Login() {
 	const firebaseConfig = {
@@ -23,11 +29,65 @@ function Login() {
 		databaseURL: "https://users-e2358-default-rtdb.firebaseio.com/",
 	};
 	initializeApp(firebaseConfig);
+	const storage = getStorage();
 
 	const context = useContext(AuthContext);
 
 	const { setUser, login, Alert, setAlert, user, realtimeData } = context;
+	const [LoginSignupToogle, setLoginSignupToogle] = useState(true);
 	const history = useHistory();
+	const [ProfileImage, setProfileImage] = useState();
+	const [UploadOpacity, setUploadOpacity] = useState("100%");
+	const [ProfileImageUrl, setProfileImageUrl] = useState(
+		"https://cdn.dribbble.com/users/5534/screenshots/14230133/media/e2f853f8232acad78bf143c32f2f3a04.jpg?compress=1&resize=400x300"
+	);
+	const [userData, setUserData] = useState({
+		displayName: "",
+		email: "",
+		password: "",
+		confirmPassword: "",
+		photoURL: ProfileImageUrl,
+	});
+	const userDataOnChange = (e) => {
+		setUserData({ ...userData, [e.target.name]: e.target.value });
+		console.log(userData);
+	};
+	const signInWithEmailAndPassword = () => {
+		if (userData.password !== userData.confirmPassword) {
+			alert("Password and Confirm Password does not match");
+			setUserData({ ...userData, password: "", confirmPassword: "" });
+			return;
+		}
+		// const auth = getAuth();
+		// createUserWithEmailAndPassword(auth, userData.email, userData.password)
+		// 	.then((userCredential) => {
+		// 		// Signed in
+		// 		console.log(userCredential);
+		// 		// ...
+		// 	})
+		// 	.catch((error) => {
+		// 		const errorCode = error.code;
+		// 		const errorMessage = error.message;
+		// 		// ..
+		// 	});
+		const userId = userData.email.split("@")[0];
+		const user = {
+			displayName: userData.displayName,
+			email: userData.email,
+			photoURL: userData.photoURL,
+			uid: userId,
+		};
+		setUser(user);
+		login(user);
+		history.push("/");
+	};
+	const LoginWthEmail = () => {
+		console.log("getting called Here");
+		const email = userData.email.split("@")[0];
+		setAlert(["Login Not Working Try To Signup", ...Alert]);
+		const notification = new Notification("Login Not Working Try To Signup");
+		history.push("/");
+	};
 	const GoogleLogin = () => {
 		const provider = new GoogleAuthProvider();
 		const auth = getAuth();
@@ -80,6 +140,7 @@ function Login() {
 				console.log(err);
 			});
 	};
+
 	const Logout = () => {
 		localStorage.removeItem("MusicUser");
 		setUser(null);
@@ -155,27 +216,241 @@ function Login() {
 				</div>
 			) : (
 				<div className="Authentication">
-					<img
-						alt="Google"
-						onClick={() => {
-							GoogleLogin();
-						}}
-						src="/images/Google.svg"
-					/>
-					<img
-						alt="Facebook"
-						onClick={() => {
-							FacebookLogin();
-						}}
-						src="/images/Facebook.svg"
-					/>
-					<img
-						alt="Twitter"
-						onClick={() => {
-							TwitterLogin();
-						}}
-						src="/images/Twitter.svg"
-					/>
+					<div className="AuthBanner">
+						{LoginSignupToogle ? (
+							<img src="/images/SignUp.svg" />
+						) : (
+							<img src="/images/SignIn.svg" />
+						)}
+					</div>
+					<div className="AuthBody">
+						{LoginSignupToogle ? (
+							<div className="MainForm">
+								<p>Signin To Enjoy More</p>
+								<input
+									type="email"
+									placeholder="Email"
+									value={userData.email}
+									name="email"
+									onChange={userDataOnChange}
+								/>
+								<input
+									type="password"
+									placeholder="Password"
+									value={userData.password}
+									name="password"
+									onChange={userDataOnChange}
+								/>
+								<input
+									type="submit"
+									onClick={() => {
+										LoginWthEmail();
+									}}
+								/>
+								<p>
+									Don`t have an account{" "}
+									<a
+										onClick={() => {
+											setLoginSignupToogle(false);
+											setUserData({ ...userData, email: "", password: "" });
+										}}
+									>
+										signup ,
+									</a>
+								</p>
+								<div className="AUthProviders">
+									<img
+										alt="Google"
+										onClick={() => {
+											GoogleLogin();
+										}}
+										src="/images/Google.svg"
+									/>
+									<img
+										alt="Facebook"
+										onClick={() => {
+											FacebookLogin();
+										}}
+										src="/images/Facebook.svg"
+									/>
+									<img
+										alt="Twitter"
+										onClick={() => {
+											TwitterLogin();
+										}}
+										src="/images/Twitter.svg"
+									/>
+								</div>
+							</div>
+						) : (
+							<div className="MainForm">
+								<p>Signup In Really Fast Steps</p>
+								<label id="profImg" htmlFor="profileImage">
+									<img
+										style={{
+											opacity: UploadOpacity,
+										}}
+										src={
+											ProfileImage
+												? URL.createObjectURL(ProfileImage)
+												: "https://cdn.dribbble.com/users/5534/screenshots/14230133/media/e2f853f8232acad78bf143c32f2f3a04.jpg?compress=1&resize=400x300"
+										}
+										alt="ProfileImage"
+									/>
+									<p>Choose Profile Image</p>
+								</label>
+
+								<input
+									id="profileImage"
+									type="file"
+									accept="image/*"
+									onChange={(e) => {
+										if (e.target.files[0]) {
+											const storageRef = ref(
+												storage,
+												"profileImages/" + e.target.files[0].name
+											);
+											const metadata = {
+												contentType: "image/jpeg",
+											};
+											const uploadTask = uploadBytesResumable(
+												storageRef,
+												e.target.files[0],
+												metadata
+											);
+											uploadTask.on(
+												"state_changed",
+												(snapshot) => {
+													// Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+													const progress =
+														(snapshot.bytesTransferred / snapshot.totalBytes) *
+														100;
+													console.log("Upload is " + progress + "% done");
+													setUploadOpacity(progress + "%");
+													// eslint-disable-next-line
+													switch (snapshot.state) {
+														case "paused":
+															console.log("Upload is paused");
+															setAlert(["Upload is paused", ...Alert]);
+															break;
+														case "running":
+															console.log("Upload is running");
+															setAlert(["Upload is running", ...Alert]);
+															break;
+													}
+												},
+												(error) => {
+													// A full list of error codes is available at
+													// https://firebase.google.com/docs/storage/web/handle-errors
+													// eslint-disable-next-line
+													switch (error.code) {
+														case "storage/unauthorized":
+															// User doesn't have permission to access the object
+															setAlert(["Permission Denied", ...Alert]);
+															break;
+														case "storage/canceled":
+															// User canceled the upload
+															setAlert(["Canceled Upload", ...Alert]);
+
+															break;
+
+														// ...
+
+														case "storage/unknown":
+															// Unknown error occurred, inspect error.serverResponse
+															setAlert(["Unknown Error Occurred", ...Alert]);
+
+															break;
+													}
+												},
+												() => {
+													getDownloadURL(uploadTask.snapshot.ref).then(
+														(downloadURL) => {
+															console.log("File available at", downloadURL);
+															setAlert(["Upload is Completed", ...Alert]);
+															setProfileImageUrl(downloadURL);
+															setUserData({
+																...userData,
+																["photoURL"]: downloadURL,
+															});
+														}
+													);
+												}
+											);
+											setProfileImage(e.target.files[0]);
+										}
+									}}
+								/>
+								<input
+									type="text"
+									value={userData.displayName}
+									onChange={userDataOnChange}
+									placeholder="Name"
+									name="displayName"
+								/>
+								<input
+									type="email"
+									value={userData.email}
+									onChange={userDataOnChange}
+									placeholder="Email"
+									name="email"
+								/>
+								<input
+									type="password"
+									value={userData.password}
+									onChange={userDataOnChange}
+									placeholder="password"
+									name="password"
+								/>
+								<input
+									type="password"
+									value={userData.confirmPassword}
+									onChange={userDataOnChange}
+									placeholder="Confirm Password"
+									name="confirmPassword"
+								/>
+								<input
+									type="submit"
+									onClick={() => {
+										signInWithEmailAndPassword();
+									}}
+								/>
+								<p>
+									Already have an account{" "}
+									<a
+										onClick={() => {
+											setLoginSignupToogle(true);
+										}}
+									>
+										signIn
+									</a>
+								</p>
+								<div className="AUthProviders">
+									<img
+										alt="Google"
+										onClick={() => {
+											GoogleLogin();
+										}}
+										src="/images/Google.svg"
+									/>
+									<img
+										alt="Facebook"
+										onClick={() => {
+											FacebookLogin();
+										}}
+										src="/images/Facebook.svg"
+									/>
+									<img
+										alt="Twitter"
+										onClick={() => {
+											TwitterLogin();
+										}}
+										src="/images/Twitter.svg"
+									/>
+								</div>
+							</div>
+						)}
+					</div>
 				</div>
 			)}
 		</>
