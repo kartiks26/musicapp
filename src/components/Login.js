@@ -52,41 +52,69 @@ function Login() {
 		setUserData({ ...userData, [e.target.name]: e.target.value });
 		console.log(userData);
 	};
-	const signInWithEmailAndPassword = () => {
-		if (userData.password !== userData.confirmPassword) {
-			alert("Password and Confirm Password does not match");
-			setUserData({ ...userData, password: "", confirmPassword: "" });
-			return;
-		}
-		// const auth = getAuth();
-		// createUserWithEmailAndPassword(auth, userData.email, userData.password)
-		// 	.then((userCredential) => {
-		// 		// Signed in
-		// 		console.log(userCredential);
-		// 		// ...
-		// 	})
-		// 	.catch((error) => {
-		// 		const errorCode = error.code;
-		// 		const errorMessage = error.message;
-		// 		// ..
-		// 	});
-		const userId = userData.email.split("@")[0];
-		const user = {
+	const signInWithEmailAndPassword = async () => {
+		const newUser = {
 			displayName: userData.displayName,
 			email: userData.email,
-			photoURL: userData.photoURL,
-			uid: userId,
+			password: userData.password,
+			photoURL: ProfileImageUrl,
 		};
-		setUser(user);
-		login(user);
-		history.push("/");
+		const res = await fetch(
+			"https://incandescent-act-production.up.railway.app/users/signup",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(newUser),
+			}
+		);
+		const resJson = await res.json();
+		console.log(resJson);
+		if (resJson.error) {
+			setAlert(resJson.error);
+		} else {
+			if (resJson.message == "User Saved Successfully") {
+				setAlert([resJson.message, ...Alert]);
+				setUser(resJson.user);
+				login(resJson.user);
+				history.push("/");
+			} else {
+				setAlert([resJson.message, ...Alert]);
+			}
+		}
 	};
-	const LoginWthEmail = () => {
-		console.log("getting called Here");
-		const email = userData.email.split("@")[0];
-		setAlert(["Login Not Working Try To Signup", ...Alert]);
-		const notification = new Notification("Login Not Working Try To Signup");
-		history.push("/");
+	const LoginWthEmail = async () => {
+		const user = {
+			email: userData.email,
+			password: userData.password,
+		};
+		const res = await fetch(
+			"https://incandescent-act-production.up.railway.app/users/login",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(user),
+			}
+		);
+		const data = await res.json();
+		if (data.error) {
+			setAlert(["Invalid Email or Password", ...Alert]);
+
+			return;
+		}
+		console.log(data);
+		if (data.message == "Login Successful") {
+			setAlert([data.message, ...Alert]);
+
+			setUser(data.user);
+			login(data.user);
+			history.push("/");
+		} else {
+			setAlert([data.message, ...Alert]);
+		}
 	};
 	const GoogleLogin = () => {
 		const provider = new GoogleAuthProvider();
@@ -114,7 +142,7 @@ function Login() {
 				setUser(res.user);
 				login(res.user);
 
-				history.push("/");
+				// history.push("/");
 			})
 			.catch((err) => {
 				console.log(err);
