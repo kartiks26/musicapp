@@ -25,7 +25,26 @@ function Songs(props) {
 	const favIdArray = favoriteSongs.map((song) => song._id);
 	const [lastPlayed, setLastPlayed] = useState(null);
 	const [PlayPause, setPlayPause] = useState(false);
+	const handelDoubleClick = (e, index) => {
+		switch (e.detail) {
+			case 1:
+				if (lastPlayed || lastPlayed === 0) {
+					audio[lastPlayed].pause();
+					audio[lastPlayed].currentTime = 0;
+				}
+				audio[index].play();
+				setCurrentSong(data[index]);
+				setLastPlayed(index);
 
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			default:
+				return;
+		}
+	};
 	function muteAudio() {
 		var audios = document.getElementsByTagName("audio"),
 			i,
@@ -43,7 +62,7 @@ function Songs(props) {
 			audios[i].muted = false;
 		}
 	}
-	const handelShufflePlay = () => {
+	const handelShufflePlay = (index) => {
 		setPlayPause(false);
 		try {
 			var audio = document.querySelectorAll("audio");
@@ -115,11 +134,15 @@ function Songs(props) {
 							}}
 							className="ActualControllers"
 							xmlns="http://www.w3.org/2000/svg"
-							viewBox="-1 -3 24 24"
+							viewBox="-2 -2 24 24"
 							width="24"
 							fill="white"
 						>
-							<path d="M12 2h-.6a2 2 0 0 0-1.444.617L6.239 6.5H2v5h4.239l3.717 3.883A2 2 0 0 0 11.4 16H12V2zM5.385 4.5L8.51 1.234A4 4 0 0 1 11.401 0H13a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-1.6a4 4 0 0 1-2.889-1.234L5.385 13.5H2a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h3.385zM19.415 9l1.413 1.414a1 1 0 1 1-1.414 1.414L18 10.414l-1.414 1.414a1 1 0 1 1-1.414-1.414L16.586 9l-1.414-1.414a1 1 0 0 1 1.414-1.414L18 7.586l1.414-1.414a1 1 0 1 1 1.414 1.414L19.414 9z"></path>
+							{AudioStatus ? (
+								<path d="M15.658 10.057l.707-.707a1 1 0 1 0-1.414-1.415l-.707.708-.707-.708a1 1 0 0 0-1.414 1.415l.707.707-.707.707a1 1 0 0 0 1.414 1.414l.707-.707.707.707a1 1 0 0 0 1.414-1.414l-.707-.707zM10 20C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10zm-4.718-6.713h1.005l1.823 1.71a2 2 0 0 0 1.368.54h.204a1.6 1.6 0 0 0 1.6-1.6v-7.8a1.6 1.6 0 0 0-1.6-1.6h-.204a2 2 0 0 0-1.368.541l-1.823 1.71H5.282a2 2 0 0 0-2 2v2.5a2 2 0 0 0 2 2zm1.796-4.5L9.282 6.72v6.634l-2.204-2.067H5.282v-2.5h1.796z"></path>
+							) : (
+								<path d="M10 20C4.477 20 0 15.523 0 10S4.477 0 10 0s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm5.658-7.943l.707.707a1 1 0 0 1-1.414 1.414l-.707-.707-.707.707a1 1 0 0 1-1.414-1.414l.707-.707-.707-.707a1 1 0 1 1 1.414-1.415l.707.708.707-.708a1 1 0 0 1 1.414 1.415l-.707.707zm-10.376 3.23a2 2 0 0 1-2-2v-2.5a2 2 0 0 1 2-2h1.005L8.11 5.078a2 2 0 0 1 1.368-.54h.204a1.6 1.6 0 0 1 1.6 1.6v7.8a1.6 1.6 0 0 1-1.6 1.6h-.204a2 2 0 0 1-1.368-.542l-1.823-1.709H5.282zm1.796-4.5H5.282v2.5h1.796l2.204 2.067V6.72L7.078 8.787z"></path>
+							)}
 						</svg>
 
 						{PlayPause ? (
@@ -135,7 +158,7 @@ function Songs(props) {
 								className="ActualControllers"
 								xmlns="http://www.w3.org/2000/svg"
 								viewBox="-4 -3 24 24"
-								width="24"
+								width="28"
 								fill="white"
 							>
 								<path d="M13.82 9.523a.976.976 0 0 0-.324-1.363L3.574 2.128a1.031 1.031 0 0 0-.535-.149c-.56 0-1.013.443-1.013.99V15.03c0 .185.053.366.153.523.296.464.92.606 1.395.317l9.922-6.031c.131-.08.243-.189.325-.317zm.746 1.997l-9.921 6.031c-1.425.867-3.3.44-4.186-.951A2.918 2.918 0 0 1 0 15.03V2.97C0 1.329 1.36 0 3.04 0c.567 0 1.123.155 1.605.448l9.921 6.032c1.425.866 1.862 2.696.975 4.088-.246.386-.58.712-.975.952z"></path>
@@ -316,17 +339,41 @@ function Songs(props) {
 					? data.map((item, index) => {
 							return (
 								<div key={index} className="container">
-									<div className="song" key={index}>
+									<div
+										onClick={(e) => {
+											handelDoubleClick(e, index);
+										}}
+										className="song"
+										key={index}
+									>
 										<div className="song-img">
 											<img draggable="false" src={item.cover} alt="" />
 										</div>
-										<div>
-											<h1>{item.title}</h1>
-											<h3>{item.artist}</h3>
+										<div className="AdjustFooter">
+											<div>
+												<h1>{item.title}</h1>
+												<h3>{item.artist}</h3>
+											</div>
+											<button
+												className="Liked"
+												onClick={() => {
+													addFavorite(item);
+												}}
+											>
+												<img
+													alt="Like"
+													src={`images/${
+														favIdArray.includes(item._id) ? "Liked" : "NotLiked"
+													}.svg`}
+												/>
+											</button>
 										</div>
 
 										<div className="audioLike">
 											<audio
+												style={{
+													display: "none",
+												}}
 												onPlay={() => {
 													setCurrentSong(item);
 
@@ -344,18 +391,6 @@ function Songs(props) {
 												controls
 												controlsList="nodownload noplaybackrate"
 											></audio>
-											<button
-												onClick={() => {
-													addFavorite(item);
-												}}
-											>
-												<img
-													alt="Like"
-													src={`images/${
-														favIdArray.includes(item._id) ? "Liked" : "NotLiked"
-													}.svg`}
-												/>
-											</button>
 										</div>
 									</div>
 								</div>

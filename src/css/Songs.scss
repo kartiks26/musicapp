@@ -53,6 +53,7 @@
 	margin: 35px 60px;
 	display: flex;
 	flex-direction: column;
+
 	background-color: #f1f3f4;
 	border-radius: 10px;
 	max-width: 160px;
@@ -101,20 +102,13 @@
 			margin: 6px 0px;
 			height: 20px;
 		}
-		button {
-			border: none;
-			background-color: transparent;
-			cursor: pointer;
-			img {
-				height: 20px;
-				width: 20px;
-			}
-		}
 	}
 }
 .song:hover {
-	box-shadow: 0px 0px 25px 0px $quaternary;
+	box-shadow: 0px 0px 15px 0px $quaternary;
 	transition: 0.3s;
+	transform: translateX(5px) translateY(5px) scale(1.05);
+	transition: all 0.3s ease-in-out;
 }
 
 h1,
@@ -220,4 +214,18 @@ video::-webkit-media-controls-time-remaining-display {
 
 .fill {
 	fill: $quaternary;
+}
+.Liked {
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	margin-right: 5px;
+	img {
+		height: 20px;
+		width: 20px;
+	}
+}
+.AdjustFooter {
+	display: flex;
+	justify-content: space-between;
 }
