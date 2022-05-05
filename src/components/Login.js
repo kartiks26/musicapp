@@ -17,7 +17,7 @@ import {
 	getDownloadURL,
 	ref,
 } from "firebase/storage";
-
+const REACT_APP_MUSIC_API = process.env.REACT_APP_MUSIC_API
 function Login() {
 	const firebaseConfig = {
 		apiKey: "AIzaSyDLj-taD0dvM6ETYt4PyNsZBWH-mZwgSdI",
@@ -60,7 +60,7 @@ function Login() {
 			photoURL: ProfileImageUrl,
 		};
 		const res = await fetch(
-			"https://incandescent-act-production.up.railway.app/users/signup",
+			`${REACT_APP_MUSIC_API}/users/signup`,
 			{
 				method: "POST",
 				headers: {
@@ -90,7 +90,7 @@ function Login() {
 			password: userData.password,
 		};
 		const res = await fetch(
-			"https://incandescent-act-production.up.railway.app/users/login",
+			`${REACT_APP_MUSIC_API}/users/login`,
 			{
 				method: "POST",
 				headers: {
@@ -194,7 +194,7 @@ function Login() {
 	useEffect(() => {
 		if (user) {
 			fetch(
-				`https://incandescent-act-production.up.railway.app/upload/getSongsByUser/${user.uid}`
+				`${REACT_APP_MUSIC_API}/upload/getSongsByUser/${user.uid}`
 			).then((res) => {
 				res.json().then((data) => {
 					console.log(data);
@@ -239,7 +239,7 @@ function Login() {
 						</div>
 					</div>
 					<div className="UserPosts">
-						<Songs data={uploadedSong} useHeader={false} />
+						<Songs data={uploadedSong} useHeader={true} />
 					</div>
 				</div>
 			) : (
